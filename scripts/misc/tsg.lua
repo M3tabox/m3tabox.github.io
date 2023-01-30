@@ -2367,32 +2367,6 @@ if false then
     library:Seperator(MiscTab)
 end
 
-
-do -- Join Discord
-    library:Button({
-        Name = "Join/Copy Discord Invite",
-        Function = function() 
-            pcall(function()
-                (request or syn and syn.request)({
-                    Url = 'http://127.0.0.1:6463/rpc?v=1',
-                    Method = 'POST',
-                    Headers = {
-                        ['Content-Type'] = 'application/json',
-                        ['Origin'] = 'https://discord.com'
-                    },
-                    Body = httpService:JSONEncode({
-                        cmd = 'INVITE_BROWSER',
-                        nonce = httpService:GenerateGUID(false),
-                        args = {code = 'WYvnhbkwAA'}
-                    })
-                }) 
-            end)
-            setclipboard("https://discord.gg/WYvnhbkwAA")
-        end,
-        Tab = MiscTab,
-    })
-end
-
 -- UI HIDE:
 uis.InputBegan:Connect(function(input) 
     if input.KeyCode == Enum.KeyCode.RightControl then 
@@ -2403,7 +2377,7 @@ end)
 library:Load("tsg", "config.json")
 
 task.spawn(function() 
-    while task.wait(5) do 
+    while task.wait(1) do 
         library:Save("tsg", "config.json")
     end    
 end)
