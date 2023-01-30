@@ -2,12 +2,17 @@
 --stolen from engo#0320 (github.com/joeengo)
 --
 --[[ ------------------------------------------------------------------------------------------------------------------------------- ]]--
--- // The Survival Game Script, orignally written for v3, ported to v2. Enjoy!-- // The Survival Game Script, orignally written for v3, ported to v2. Enjoy!
+-- // The Survival Game Script, orignally written for v3, ported to v2. Enjoy!
 
 --[[ TODO
-    - CONFIG SYSTEM
-
+    idk
 ]]
+
+if getgenv().TSG_LOADED then 
+    return warn("[tsg.lua] script already loaded, rejoin to re-execute.")
+else
+    getgenv().TSG_LOADED = true
+end
 
 if not game:IsLoaded() then 
     game.Loaded:Wait()
@@ -17,7 +22,7 @@ local entity = loadstring(game:HttpGet("https://github.com/joeengo/VapeV4ForRobl
 entity.fullEntityRefresh()
 
 local library = isfolder and isfile and loadfile and isfolder("engosUtilities") and isfile("engosUtilities/ui.lua") and loadfile("engosUtilities/ui.lua")() or loadstring(game:HttpGet("https://github.com/joeengo/exploiting/blob/main/UILibrary.lua?raw=true", true))()
-library:Init("tsg.lua v1.05b")
+library:Init("tsg.lua v1.07 | .gg/WYvnhbkwAA | engo#0320")
 
 local CombatTab = library:Tab("Combat")
 local WorldTab = library:Tab("World")
@@ -25,6 +30,7 @@ local UtilityTab = library:Tab("Utility")
 local MiscTab = library:Tab("Misc")
 
 local collectionService = game:GetService("CollectionService")
+local httpService = game:GetService("HttpService")
 local guiService = game:GetService("GuiService")
 local players = game:GetService("Players")
 local lplr = players.LocalPlayer
@@ -32,22 +38,20 @@ local cam = workspace.CurrentCamera
 local rs = game:GetService("ReplicatedStorage")
 local runService = game:GetService("RunService")
 local uis = game:GetService("UserInputService")
+local lastVerifiedPlaceVersion = 4423
+local placeVersion = game.PlaceVersion
+
+if placeVersion > lastVerifiedPlaceVersion then
+    --return lplr:Kick("[tsg.lua] the game has updated! Please wait for an update.")
+end
 
 -- function compat
 local islclosure = islclosure or (iscclosure and function(x) return not iscclosure(x) end)
 local getfunctionname = function(x) return debug.getinfo and debug.getinfo(x).name or debug.info and debug.info(x, "n") end
-
+local getsenv = getsenv or function(...) local gsf = getscriptclosure or getscriptfunction if gsf then return getfenv(gsf(...)) end end
 
 local tsg = {}
 local resolvePath
-local hookfunc = hookfunction
-function hookfunction(from, to, backup)
-    local suc, res = pcall(hookfunc, from, to)
-    if suc then 
-        return res
-    end
-    return backup()
-end
 
 local funcs = {}; do 
     function funcs.getAngleFacingFromPart(selfPart, part) 
@@ -87,6 +91,31 @@ local funcs = {}; do
 
         return res
     end
+
+    function funcs.getPlayerFromName(name) 
+        local name = name:lower()
+        if name == "" then 
+            return
+        end
+
+        local bestMatch
+        for i, v in next, players:GetPlayers() do 
+            local vName = v.Name:lower()
+            if v.Name == name then
+                return v
+            end
+
+            if vName:match(name) then 
+                bestMatch = v
+            end
+
+            if vName:match("^" .. name) then 
+                bestMatch = v
+            end
+        end
+
+        return bestMatch
+    end
     
     function funcs.getColorFromHealthPercentage(percentage) 
         return Color3.fromHSV(percentage / 3, 1, 1) -- Makes 100% health = 0.33333 which is green.
@@ -122,7 +151,7 @@ local funcs = {}; do
         end
     end
 
-    function funcs.getBestSlot(type, stat) 
+    function funcs.getBestSlot(type, stat, alwaysId) 
         local hotbar = tsg.ClientData.getHotbar()
         local most, best = 0, nil
         for hotbarSlot, itemId in next, hotbar do 
@@ -131,9 +160,9 @@ local funcs = {}; do
             end
 
             local itemData = tsg.Items.getItemData(itemId)
-            if table.find(itemData.itemType, type) then 
+            if itemData.itemType == type then 
                 if itemData.itemStats[stat] > most then 
-                    best = hotbarSlot
+                    best = alwaysId and itemId or hotbarSlot
                     most = itemData.itemStats[stat]
                 end
             end
@@ -155,7 +184,7 @@ local funcs = {}; do
             end
 
             local itemData = tsg.Items.getItemData(itemId)
-            if table.find(itemData.itemType, type) then 
+            if itemData.itemType == type then 
                 if itemData.itemStats[stat] > most then 
                     best = itemId
                     most = itemData.itemStats[stat]
@@ -168,8 +197,8 @@ local funcs = {}; do
 
     -- params: type, stat, bool: inventory (check inv)
     -- return: slot/id, isInInv
-    function funcs.getBestItem(type, stat, inventory) 
-        local bestSlot, most1 = funcs.getBestSlot(type, stat)
+    function funcs.getBestItem(type, stat, inventory, alwaysId) 
+        local bestSlot, most1 = funcs.getBestSlot(type, stat, alwaysId)
         local bestId, most2 = funcs.getBestId(type, stat)
 
         if (most2 > most1) and inventory then 
@@ -298,77 +327,98 @@ local funcs = {}; do
     end
 
 
-	local function LaunchAngle(v: number, g: number, d: number, h: number, higherArc: boolean)
-		local v2 = v * v
-		local v4 = v2 * v2
-		local root = math.sqrt(v4 - g*(g*d*d + 2*h*v2))
-		if not higherArc then root = -root end
-		return math.atan((v2 + root) / (g * d))
-	end
-
-	local function LaunchDirection(start, target, v, g, higherArc: boolean)
-		-- get the direction flattened:
-		local horizontal = Vector3.new(target.X - start.X, 0, target.Z - start.Z)
-		
-		local h = target.Y - start.Y
-		local d = horizontal.Magnitude
-		local a = LaunchAngle(v, g, d, h, higherArc)
-		
-		-- NaN ~= NaN, computation couldn't be done (e.g. because it's too far to launch)
-		if a ~= a then return nil end
-		
-		-- speed if we were just launching at a flat angle:
-		local vec = horizontal.Unit * v
-		
-		-- rotate around the axis perpendicular to that direction...
-		local rotAxis = Vector3.new(-horizontal.Z, 0, horizontal.X)
-		
-		-- ...by the angle amount
-		return CFrame.fromAxisAngle(rotAxis, a) * vec
-	end
-
-	local function FindLeadShot(targetPosition: Vector3, targetVelocity: Vector3, projectileSpeed: Number, shooterPosition: Vector3, shooterVelocity: Vector3, gravity: Number)
-		local distance = (targetPosition - shooterPosition).Magnitude
-
-		local p = targetPosition - shooterPosition
-		local v = targetVelocity - shooterVelocity
-		local a = Vector3.zero
-
-		local timeTaken = (distance / projectileSpeed)
-		
-		if gravity > 0 then
-			local timeTaken = projectileSpeed/gravity+math.sqrt(2*distance/gravity+projectileSpeed^2/gravity^2)
-		end
-
-		local goalX = targetPosition.X + v.X*timeTaken + 0.5 * a.X * timeTaken^2
-		local goalY = targetPosition.Y + v.Y*timeTaken + 0.5 * a.Y * timeTaken^2
-		local goalZ = targetPosition.Z + v.Z*timeTaken + 0.5 * a.Z * timeTaken^2
-		
-		return Vector3.new(goalX, goalY, goalZ)
-	end
-
-
-    function funcs.prediction(p1, p2, p3, p4, p5, grav, projvelo, ent) 
-        return LaunchDirection(p4.Position, FindLeadShot(ent.HumanoidRootPart.Position, ent.HumanoidRootPart.Velocity, projvelo, p4.Position, Vector3.zero, grav), projvelo, grav, false)
-    end
-
-    --[[
-    function funcs.remoteCheck(tab) 
-        if typeof(tab) == "table" then
-            local method = rawget(tab, "FireServer") or rawget(tab, "InvokeServer")
-            return typeof(method) == "function" and islclosure(method) and method
+    -- scuffed way of getting armor LOL
+    local meshCache = {}
+    function funcs.getArmorName(char) 
+        local armor = char:FindFirstChild("Shirt") or char:FindFirstChild("Helmet") or char:FindFirstChild("Pants")
+        if not armor then
+            return
         end
-    end
-    ]]
 
-    --local Version = resolvePath(rs, "version").Value
-
-    function funcs.getKeyedRemotes() 
-        for i, v in next, getgc(true) do 
-            if typeof(v) == "table" and rawget(v, 'meleePlayer') then
-                return v
+        local mesh
+        for i,v in next, armor:GetDescendants() do 
+            if v:IsA("MeshPart") and v.Name:match("Meshes") then 
+                mesh = v
+                break
             end
         end
+
+        if not mesh then 
+            return
+        end
+
+        if not meshCache[mesh] then
+            local craftingTrees = lplr.PlayerGui.Crafting.trees  
+            for i,v in next, craftingTrees:GetDescendants() do
+                if v.Name == mesh.Name then 
+                    meshCache[mesh] = v:FindFirstAncestorOfClass("ImageButton").Name:split(" ")[1]
+                end
+            end
+        end
+
+        return meshCache[mesh]
+    end
+
+    function funcs.findInFiOne(tab, typeOf, checkFunc)
+        for i,v in next, tab do
+            if type(v) == "table" then 
+                local value = rawget(v, "value")
+                if typeof(value) == typeOf and checkFunc(value) then 
+                    return value
+                end 
+
+                for i2, v2 in next, v do 
+                    if typeof(v2) == "table" then 
+                        local value = rawget(v2, "value")
+                        if typeof(value) == typeOf and checkFunc(value) then 
+                            return value
+                        end 
+                    end
+                end
+            end
+        end
+    end
+
+    function funcs.remoteCheck(tab) 
+        if typeof(tab) == "table" then
+            if rawget(tab, "Instance") then 
+                return
+            end
+
+            local fireServer = rawget(tab, "FireServer")
+            local method = fireServer or rawget(tab, "InvokeServer")
+            method = typeof(method) == "function" and islclosure(method) and method
+
+            return method, method == fireServer and "FireServer" or "InvokeServer"
+        end
+    end 
+
+
+    function funcs.getKeyedRemotes() 
+        local remotes = {}
+        for i,v in next, getgc(true) do 
+            local method, methodStr = funcs.remoteCheck(v)
+            if method then 
+                local upvals = debug.getupvalues(method)
+                local remote = funcs.findInFiOne(upvals, "Instance", function(x) 
+                    return x:IsA("RemoteEvent") or x:IsA("RemoteFunction")
+                end)
+
+                if remote then
+                    remotes[remote.Name] = v
+                else
+                    warn("[tsg.lua] Remote was almost finalized, but something went wrong! (", remote or "NIL REMOTE", ")")
+                end
+            end
+
+            if typeof(v) == "function" and getfunctionname(v) == "on_lua_error" then 
+                hookfunction(v, function(a, b, c) 
+                    --warn("[FiOne]", a, b, c)
+                end)
+            end 
+        end
+
+        return remotes
     end
 
     function funcs.getKeyedRemotesRecursive(recurseAmount) 
@@ -447,71 +497,72 @@ function resolvePath(parent, ...)
     return last
 end
 
---[[
-local oldNamecall; oldNamecall = hookmetamethod(game, "__namecall", function(self, ...) 
-    local ncm = getnamecallmethod()
-    if (not checkcaller()) and string.lower(ncm) == "kick" then 
-        return
-    end
-
-    return oldNamecall(self, ...)
-end)
-
-hookfunction(lplr.Kick, function(...) end)]]
-
-
-do  --[[
-        My extremely hacky way of bypassing the stoopid ac:
-    ]]
-    local shiftKeys = {
-        31,
-        14,
-        1,
-    }
-
-    local bitLShift
-    local hookedBitLShift = function(a, b, ...) 
-        local res = bitLShift(a, b, ...)
-        if a == 1 and table.find(shiftKeys, b) and debug.info(2, "s"):match("FiOne") then 
-            res = bitLShift(0, b, ...) 
+do -- ac bypass :skull:
+    local oldJSONEncode
+    local function newJsonEncode(self, tab) 
+        if tab then
+            if rawget(tab, "clientInfo") then 
+                rawset(tab, "clientInfo", "_")
+            end
         end
-        return res
+        return oldJSONEncode(self, tab)
     end
 
-    bitLShift = hookfunction(getrenv().bit32.lshift, hookedBitLShift, function() 
-        local old = getrenv().bit32.lshift
-        setreadonly(getrenv().bit32, false)
-        getrenv().bit32.lshift = hookedBitLShift
-        setreadonly(getrenv().bit32, true)
-        return old
+    oldJSONEncode = hookfunction(httpService.JSONEncode, function(self, ...) 
+        return newJsonEncode(self, ...)
+    end)
+
+    local oldNamecall; oldNamecall = hookmetamethod(game, "__namecall", function(self, ...) 
+        local ncm = getnamecallmethod()
+        if (not checkcaller()) and string.lower(ncm) == "jsonencode" then 
+            return newJsonEncode(self, ...)
+        end
+
+        return oldNamecall(self, ...)
     end)
 end
 
 local keyedRemotes = funcs.getKeyedRemotesRecursive(1)
+getgenv().remotes = keyedRemotes
+
+if not keyedRemotes then
+    lplr:Kick("[tsg.lua] Failed to get remotes! (table)")
+end
+
+if not keyedRemotes.meleePlayer then
+    lplr:Kick("[tsg.lua] Failed to get remotes! (meleePlayer)")
+end
 
 tsg = {
     ClientData = require(resolvePath(rs, "modules", "player", "ClientData")),
     Sounds = require(resolvePath(rs, "modules", "misc", "Sounds")),
     Items = require(resolvePath(rs, "game", "Items")),
     Effects = require(resolvePath(rs, "game", "Effects")),
-    fpsUtil  = require(resolvePath(rs, "modules", "misc", "fpsUtil")),
+    fpsUtil = require(resolvePath(rs, "modules", "misc", "fpsUtil")),
     Projectiles = require(resolvePath(rs, "modules", "game", "Projectiles")),
+    AtmosphericLighting = require(resolvePath(rs, "modules", "game", "AtmosphericLighting")),
 
-    MeleePlayerRemote = rawget(keyedRemotes, "meleePlayer"),
+    MeleePlayerRemote = keyedRemotes.meleePlayer,
+    HitStructureRemote = keyedRemotes.hitStructure,
+    MineRemote = keyedRemotes.mine,
+    ChopRemote = keyedRemotes.chop,
+
     MeleeAnimalRemote = resolvePath(rs, "remoteInterface", "interactions", "meleeAnimal"),
     EatRemote = resolvePath(rs, "remoteInterface", "interactions", "eat"),
-    MineRemote = rawget(keyedRemotes, "mine"),
-    ChopRemote = rawget(keyedRemotes, "chop"),
     ShotPlayerHitRemote = resolvePath(rs, "remoteInterface", "interactions", "shotHitPlayer"),
     PickupRemote = resolvePath(rs, "remoteInterface", "inventory", "pickupItem"),
     RespawnRemote = resolvePath(rs, "remoteInterface", "character", "respawn"),
     FireRemote = resolvePath(rs, "remoteInterface", "world", "onFire"),
     DropRemote = resolvePath(rs, "remoteInterface", "inventory", "drop"),
     EquipHotbarRemote = resolvePath(rs, "remoteInterface", "inventory", "equipHotbar"),
-    HitStructureRemote = rawget(keyedRemotes, "hitStructure"),
+    EquipClothingRemote = resolvePath(rs, "remoteInterface", "inventory", "equipClothing"),
+    TakeRemote = resolvePath(rs, "remoteInterface", "inventory", "take"),
 
     SetHungerEvent = resolvePath(rs, "remoteInterface", "playerData", "setHunger"),
+    SetInventoryEvent = resolvePath(rs, "remoteInterface", "playerData", "setinventory"),
 }
+
+local filter = resolvePath(lplr, "PlayerGui", "Inventory", "filter")
 
 getgenv().tsg = tsg -- testing purposes
 getgenv().library = library -- testing purposes
@@ -528,18 +579,7 @@ local animalContainer = resolvePath(workspace, "animals"); do
     end 
 end
 
-library:Button({
-    Name = "Fullbright",
-    Tab = Utility,
-    Function = function()
-        game:GetService("Lighting").Brightness = 2
-        game:GetService("Lighting").ClockTime = 14
-        game:GetService("Lighting").FogEnd = 100000
-        game:GetService("Lighting").GlobalShadows = false
-        game:GetService("Lighting").OutdoorAmbient = Color3.fromRGB(128, 128, 128)
-    end
-})
-    
+
 do -- KILLAURA
 
     local rayparams = RaycastParams.new()
@@ -563,8 +603,6 @@ do -- KILLAURA
     highlightInstance.FillTransparency = 0.2
     highlightInstance.DepthMode = Enum.HighlightDepthMode.AlwaysOnTop
     highlightInstance.Enabled = true
-
-    -- TODO: make highlight for animal while attacking player and animal
 
     local killaura; killaura = library:Toggle({ 
         Name = "Killaura",
@@ -656,7 +694,7 @@ do -- KILLAURA
                             continue
                         end
 
-                        local bestWeapon = funcs.getBestItemAndEquipToHotbar("Melee Weapon", "meleeDamage", not hotbarOnly.Enabled)
+                        local bestWeapon = funcs.getBestItemAndEquipToHotbar(tsg.Items.ITEM_TYPES.MELEE_WEAPON, "meleeDamage", not hotbarOnly.Enabled)
                         if not bestWeapon then
                             target = nil
                             continue
@@ -665,7 +703,7 @@ do -- KILLAURA
                         local equipped, equippedId = funcs.getEquippedSlot(), funcs.getEquippedId()
                         if equipped and (equippedId > 0) then
                             local equippedData = tsg.Items.getItemData(equippedId)
-                            if table.find(equippedData.itemType, "Melee Weapon") then 
+                            if equippedData.itemType == tsg.Items.ITEM_TYPES.MELEE_WEAPON then 
                                 if useEquippedOverBest.Enabled then 
                                     bestWeapon = equipped 
                                 end
@@ -717,6 +755,15 @@ do -- KILLAURA
                 highlightInstance.Adornee = nil
             end
         end
+    })
+
+    library:Bind({
+        Name = "Killaura Bind",
+        Function = function() 
+            killaura:Toggle()
+        end,
+        Default = false,
+        Tab = CombatTab,
     })
 
     weaponCheck = library:Toggle({
@@ -840,8 +887,165 @@ end
 
 
 
-do 
-    
+do -- Player ESP 
+    local armorCache = {}
+    local espCharConnections = {}
+    local showHealth, showDist, showArmor
+    local esps = {}
+    local espFuncs = {
+        Add = function(ent) 
+            if not ent then
+                return
+            end
+
+            if not ent.Targetable then 
+                return
+            end
+
+            if esps[ent.Player.Name] then 
+                return
+            end
+
+            local pos = ent.HumanoidRootPart.Position - Vector3.new(0, 3.5, 0)
+            local vec2, vis = cam:WorldToViewportPoint(pos)
+            local dist = lplr:DistanceFromCharacter(pos)
+            local health = ent.Humanoid.Health
+            armorCache[ent.Player.Name] = funcs.getArmorName(ent.Character) or "No"
+
+            local espText = ent.Player.Name
+            if showDist.Enabled then 
+                espText = string.format("[%s] %s", tostring(math.round(dist)), espText)
+            end
+
+            if showHealth.Enabled then 
+                espText = string.format("%s [%s HP]", espText, tostring(math.round(health)))
+            end
+
+            if showArmor.Enabled then 
+                espText = string.format("%s\n[%s]", espText, ((armorCache[ent.Player.Name] or "No") .. " Armor" ))
+            end
+
+            local drawing = Drawing.new("Text")
+            drawing.Visible = vis
+            drawing.Color = ent.Team and ent.Team.TeamColor.Color or Color3.new(1, 1, 1)
+            drawing.Text = espText
+            drawing.Size = 18
+            drawing.Position = Vector2.new(vec2.X, vec2.Y)
+            drawing.ZIndex = 10000 - vec2.Z
+            drawing.Outline = true
+            drawing.OutlineColor = Color3.new(0, 0, 0)
+            drawing.Center = true
+
+            esps[ent.Player.Name] = {drawing = drawing, ent = ent}
+
+            espCharConnections[ent.Player.Name] = ent.Character.DescendantAdded:Connect(function(desc) 
+                if ent and ent.Player then
+                    armorCache[ent.Player.Name] = funcs.getArmorName(ent.Character) or "No"
+                end
+            end)
+        end,
+        Update = function(esp) 
+            local ent, drawing = esp.ent, esp.drawing
+            local pos = ent.HumanoidRootPart.Position - Vector3.new(0, 3.5, 0)
+            local vec2, vis = cam:WorldToViewportPoint(pos)
+            local dist = lplr:DistanceFromCharacter(pos)
+            local health = ent.Humanoid.Health
+            local espText = ent.Player.Name
+            if showDist.Enabled then 
+                espText = string.format("[%s] %s", tostring(math.round(dist)), espText)
+            end
+
+            if showHealth.Enabled then 
+                espText = string.format("%s [%s HP]", espText, tostring(math.round(health)))
+            end
+
+            if showArmor.Enabled then 
+                espText = string.format("%s\n[%s]", espText, ((armorCache[ent.Player.Name] or "No") .. " Armor" ))
+            end
+
+            drawing.Text = espText
+            drawing.ZIndex = 10000 - vec2.Z
+            drawing.Position = Vector2.new(vec2.X, vec2.Y)
+            drawing.Visible = vis
+            drawing.Color = ent.Team and ent.Team.TeamColor.Color or Color3.new(1, 1, 1)
+        end,
+    }
+
+    local espConnection1, espConnection2, espConnection3
+    local playerESP = library:Toggle({
+        Name = "Player ESP",
+        Default = false,
+        Tab = UtilityTab,
+        Function = function(value) 
+            if value then 
+                espConnection1 = entity.entityAddedEvent:Connect(function(ent) 
+                    espFuncs.Add(ent)
+                end)
+                espConnection3 = entity.entityRemovedEvent:Connect(function(player) 
+                    if espCharConnections[player.Name] and espCharConnections[player.Name].Connected then 
+                        espCharConnections[player.Name]:Disconnect() 
+                    end
+                    if esps[player.Name] then
+                        esps[player.Name].drawing:Remove()
+                        esps[player.Name] = nil
+                    end
+                end)
+                for i, v in next, entity.entityList do 
+                    espFuncs.Add(v)
+                end
+
+                espConnection2 = runService.RenderStepped:Connect(function() 
+                    for i,v in next, esps do
+                        espFuncs.Update(v)
+                    end
+                end)
+            else
+                espConnection1:Disconnect()
+                espConnection2:Disconnect()
+                espConnection3:Disconnect()
+                for i,v in next, esps do 
+                    v.drawing:Remove()
+                end
+                for i,v in next, espCharConnections do 
+                    v:Disconnect()
+                end
+                esps = {}
+                espCharConnections = {}
+            end
+        end
+    })
+
+    library:Bind({
+        Name = "Player ESP Bind",
+        Function = function() 
+            playerESP:Toggle()
+        end,
+        Default = false,
+        Tab = UtilityTab,
+    })
+
+    showHealth = library:Toggle({
+        Name = "Display Health",
+        Default = true,
+        Tab = UtilityTab,
+        Function = function(value) end
+    })
+
+    showDist = library:Toggle({
+        Name = "Display Distance",
+        Default = true,
+        Tab = UtilityTab,
+        Function = function(value) end
+    })
+
+    showArmor = library:Toggle({
+        Name = "Display Armor",
+        Default = true,
+        Tab = UtilityTab,
+        Function = function(value) end
+    })
+
+    library:Seperator(UtilityTab)
 end
 
 
@@ -877,6 +1081,15 @@ do -- SPEED
         Default = false,
         Tab = UtilityTab,
         Function = function() end
+    })
+
+    library:Bind({
+        Name = "Speed Bind",
+        Function = function() 
+            speed:Toggle()
+        end,
+        Default = false,
+        Tab = UtilityTab,
     })
 
     speedVal = library:Slider({
@@ -925,6 +1138,16 @@ do
         Default = false,
         Tab = UtilityTab
     })
+
+    library:Bind({
+        Name = "Noclip Bind",
+        Function = function() 
+            noclip:Toggle()
+        end,
+        Default = false,
+        Tab = UtilityTab,
+    })
+
     library:Seperator(UtilityTab)
 end
 
@@ -957,6 +1180,16 @@ do
             end
         end,
     })
+
+    library:Bind({
+        Name = "Jesus Bind",
+        Function = function() 
+            jesus:Toggle()
+        end,
+        Default = false,
+        Tab = UtilityTab,
+    })
+
     library:Seperator(UtilityTab)
 end
 
@@ -1004,6 +1237,15 @@ do -- FLY
         Tab = UtilityTab,
     })
 
+    library:Bind({
+        Name = "Flight Bind",
+        Function = function() 
+            fly:Toggle()
+        end,
+        Default = false,
+        Tab = UtilityTab,
+    })
+
     speedVal = library:Slider({
         Name = "Value",
         Function = function() end,
@@ -1038,7 +1280,7 @@ do -- AUTOEAT
 
                     for itemId, amount in next, tsg.ClientData.getInventory() do 
                         local itemData = tsg.Items.getItemData(itemId)
-                        if not table.find(itemData.itemType, "Consumable") then 
+                        if itemData.itemType ~= tsg.Items.ITEM_TYPES.CONSUMABLE then 
                             continue
                         end
 
@@ -1066,6 +1308,15 @@ do -- AUTOEAT
                 autoEatConnection:Disconnect()
             end
         end,
+        Tab = UtilityTab,
+    })
+
+    library:Bind({
+        Name = "AutoEat Bind",
+        Function = function() 
+            autoEat:Toggle()
+        end,
+        Default = false,
         Tab = UtilityTab,
     })
 
@@ -1101,35 +1352,41 @@ end
 ----library:Seperator()
 
 do -- plr tp
-    local playerSelector
+    local username
     local playerTPButton = library:Button({
         Name = "Teleport To Player",
         Function = function() 
-            local ind, ent = entity.getEntityFromPlayer(playerSelector.Selected.Value)
-            if ent then
-                funcs.teleportTo(ent.HumanoidRootPart.CFrame)
+            local player = funcs.getPlayerFromName(username.Value)
+            if player then
+                local ind, ent = entity.getEntityFromPlayer(player)
+                if ent then
+                    funcs.teleportTo(ent.HumanoidRootPart.CFrame)
+                end
+            else
+                local ent = entity.entityList[math.random(1, #entity.entityList)]
+                if ent then
+                    funcs.teleportTo(ent.HumanoidRootPart.CFrame)
+                end
             end
         end,
         Tab = MiscTab,
     })
 
-    playerSelector = library:Selector({
-        Name = "Select Player",
-        List = players:GetPlayers(),
-        Default = players:GetPlayers()[1],
-        Function = function() end,
+    library:Bind({
+        Name = "Player TP Bind",
+        Function = function() 
+            playerTPButton:Click()
+        end,
+        Default = false,
         Tab = MiscTab,
     })
 
-    players.PlayerAdded:Connect(function(p) 
-        playerSelector:SetList(players:GetPlayers())
-        playerSelector:Select(players:GetPlayers()[1])
-    end)
-
-    players.PlayerRemoving:Connect(function() 
-        playerSelector:SetList(players:GetPlayers())
-        playerSelector:Select(players:GetPlayers()[1])
-    end)
+    username = library:Textbox({
+        Name = "Username",
+        Default = "",
+        Function = function() end,
+        Tab = MiscTab,
+    })
 
     library:Seperator(MiscTab)
 end
@@ -1156,6 +1413,16 @@ do -- SERVER LAGGER
         end,
         Tab = MiscTab,
     })
+
+    library:Bind({
+        Name = "Server Lagger Bind",
+        Function = function() 
+            lagger:Toggle()
+        end,
+        Default = false,
+        Tab = MiscTab,
+    })
+
     library:Seperator(MiscTab)
 end
 
@@ -1185,25 +1452,98 @@ do -- INF STAM
         end,
         Tab = UtilityTab,
     })
+
+    library:Bind({
+        Name = "Infinite Stamina Bind",
+        Function = function() 
+            infStamina:Toggle()
+        end,
+        Default = false,
+        Tab = UtilityTab,
+    })
+
     library:Seperator(UtilityTab)
 end
 
-do -- ANTI ENCUMBER
-    local speedFactor
-    local antiEncumber = library:Toggle({
-        Name = "Anti Encumbered",
+do
+    local oldMappings = {}
+    local noSlow = library:Toggle({
+        Name = "No Slow",
         Default = false,
         Function = function(value) 
             if value then 
-                speedFactor = tsg.Effects.getEffectData("Over_Encumbered").speedFactor
-                tsg.Effects.getEffectData("Over_Encumbered").speedFactor = 1
+                for i, v in next, debug.getupvalue(tsg.Effects.getEffectData, 1) do 
+                    if v.speedFactor and v.speedFactor < 1 then 
+                        oldMappings[i] = v.speedFactor
+                        v.speedFactor = 1
+                    end
+                end
             else
-                tsg.Effects.getEffectData("Over_Encumbered").speedFactor = speedFactor
-                speedFactor = nil
+                for i, v in next, debug.getupvalue(tsg.Effects.getEffectData, 1) do 
+                    if oldMappings[i] then 
+                        v.speedFactor = oldMappings[i]
+                    end
+                end
+                oldMappings = {}
             end
         end,
         Tab = UtilityTab,
     })
+
+    library:Bind({
+        Name = "No Slow Bind",
+        Function = function() 
+            noSlow:Toggle()
+        end,
+        Default = false,
+        Tab = UtilityTab,
+    })
+
+    library:Seperator(UtilityTab)
+end
+
+do 
+    local function equipBestArmor() 
+        local bestArmor = {
+            [1] = {funcs.getBestItem(tsg.Items.ITEM_TYPES.HELMET, "defense", true, true)},
+            [2] = {funcs.getBestItem(tsg.Items.ITEM_TYPES.SHIRT, "defense", true, true)},
+            [3] = {funcs.getBestItem(tsg.Items.ITEM_TYPES.PANTS, "defense", true, true)},
+            [4] = {funcs.getBestItem(tsg.Items.ITEM_TYPES.BACKPACK, "defense", true, true)},
+        }
+        
+        local equippedClothing = tsg.ClientData.getEquippedClothing()
+
+        for i,v in next, bestArmor do
+            if v[1] and v[1] ~= equippedClothing[i] then
+                tsg.EquipClothingRemote:InvokeServer(v[2] and "inventory" or "hotbar", i, v[1])
+            end
+        end
+    end
+
+    local autoArmor; autoArmor = library:Toggle({
+        Name = "Auto Armor",
+        Default = false,
+        Function = function(value) 
+            if value then
+                task.spawn(function() 
+                    repeat task.wait(.25) 
+                        equipBestArmor()
+                    until not autoArmor.Enabled
+                end)
+            end
+        end,
+        Tab = UtilityTab,
+    })
+
+    library:Bind({
+        Name = "Auto Armor Bind",
+        Function = function() 
+            autoArmor:Toggle()
+        end,
+        Default = false,
+        Tab = UtilityTab,
+    })
+
     library:Seperator(UtilityTab)
 end
 
@@ -1236,77 +1576,189 @@ do
         Tab = UtilityTab,
     })
 
+    library:Bind({
+        Name = "Fast Pickup Bind",
+        Function = function() 
+            fastPickup:Toggle()
+        end,
+        Default = false,
+        Tab = UtilityTab,
+    })
+
+    library:Seperator(UtilityTab)
 end
 
-----library:Seperator()
+do -- STaCK SIZE THING
+    local oldMappings = {}
 
+    local unstackables
 
-do -- BOW AIMBOT
-
-    -- MY CODE:  NOT XYLEX (REAL)!!!!
-    local oldShoot
-    local function newShoot(p1, p2, p3, p4, p5, ...) 
-        local itemData = tsg.Items.getItemData(p3)
-        local projVelo = itemData.projectileVelocity
-        local target = funcs.getClosestEntity()
-
-        if target then
-            p5 = 1
-            local grav = workspace.Gravity * 2
-            local calc = funcs.prediction(p1, p2, p3, p4, p5, grav, projVelo, target)
-            if calc then 
-                p4 = CFrame.new(p4.Position, p4.Position + calc)
-            end  
-        end   
-        return oldShoot(p1, p2, p3, p4, p5, ...)
+    local inventoryChanged
+    if getconnections then 
+        inventoryChanged = getconnections(filter.Changed)[1].Function
     end
 
-    local bowAimbot
-    bowAimbot = library:Toggle({
-        Name = "Bow Aimbot",
+    local inventoryModifier;
+    inventoryModifier = library:Toggle({
+        Name = "Better Inventory",
         Default = false,
         Function = function(value) 
             if value then 
-                oldShoot = hookfunction(tsg.Projectiles.shoot, newShoot, function() 
-                    local old = tsg.Projectiles.shoot
-                    tsg.Projectiles.shoot = newShoot
-                    return old
-                end)
+                for i,v in next, debug.getupvalue(tsg.Items.getItemData, 1) do 
+                    setreadonly(v, false)
+                    if v.stackSize or unstackables.Enabled then 
+                        oldMappings[i] = v.stackSize
+                        v.stackSize = 9e9
+                    end
+                    setreadonly(v, true)
+                end
+                if inventoryChanged then 
+                    inventoryChanged()
+                end       
             else
-                hookfunction(tsg.Projectiles.shoot, oldShoot, function() 
-                    tsg.Projectiles.shoot = oldShoot
-                end)
+                for i,v in next, debug.getupvalue(tsg.Items.getItemData, 1) do 
+                    setreadonly(v, false)
+                    v.stackSize = oldMappings[i]
+                    setreadonly(v, true)
+                end
+                oldMappings = {}
+                if inventoryChanged then 
+                    inventoryChanged()
+                end
             end
         end,
-        Tab = CombatTab,
+        Tab = UtilityTab,
     })
 
-    local oldNew
-    local function newNew(self, p1, ...) 
-        local ret = oldNew(self, p1, ...)
-        local chars = {}
-        for i, v in next, entity.entityList do table.insert(chars, v.Character) end
-        local rayparams = RaycastParams.new()
-        rayparams.FilterType = Enum.RaycastFilterType.Whitelist
-        rayparams.FilterDescendantsInstances = chars
-        ret.raycastParams = rayparams
+    library:Bind({
+        Name = "Better Inventory Bind",
+        Function = function() 
+            inventoryModifier:Toggle()
+        end,
+        Default = false,
+        Tab = UtilityTab,
+    })
+
+    unstackables = library:Toggle({
+        Name = "Stack Unstackables",
+        Default = true, 
+        Function = function()
+            if inventoryModifier.Enabled then
+                inventoryModifier:Toggle()
+                inventoryModifier:Toggle()
+            end
+        end,
+        Tab = UtilityTab,
+    })
+end
+
+
+do 
+    -- MATH SKIDDED I DONT LIKE MATH
+	local function LaunchAngle(v: number, g: number, d: number, h: number, higherArc: boolean)
+		local v2 = v * v
+		local v4 = v2 * v2
+		local root = math.sqrt(v4 - g*(g*d*d + 2*h*v2))
+		if not higherArc then root = -root end
+		return math.atan((v2 + root) / (g * d))
+	end
+
+	local function LaunchDirection(start, target, v, g, higherArc: boolean)
+		-- get the direction flattened:
+		local horizontal = Vector3.new(target.X - start.X, 0, target.Z - start.Z)
+		
+		local h = target.Y - start.Y
+		local d = horizontal.Magnitude
+		local a = LaunchAngle(v, g, d, h, higherArc)
+		
+		-- NaN ~= NaN, computation couldn't be done (e.g. because it's too far to launch)
+		if a ~= a then return nil end
+		
+		-- speed if we were just launching at a flat angle:
+		local vec = horizontal.Unit * v
+		
+		-- rotate around the axis perpendicular to that direction...
+		local rotAxis = Vector3.new(-horizontal.Z, 0, horizontal.X)
+		
+		-- ...by the angle amount
+		return CFrame.fromAxisAngle(rotAxis, a) * vec
+	end
+
+	local function FindLeadShot(targetPosition: Vector3, targetVelocity: Vector3, projectileSpeed: Number, shooterPosition: Vector3, shooterVelocity: Vector3, gravity: Number)
+		local distance = (targetPosition - shooterPosition).Magnitude
+
+		local p = targetPosition - shooterPosition
+		local v = targetVelocity - shooterVelocity
+		local a = Vector3.zero
+
+		local timeTaken = (distance / projectileSpeed)
+		
+		if gravity > 0 then
+			local timeTaken = projectileSpeed/gravity+math.sqrt(2*distance/gravity+projectileSpeed^2/gravity^2)
+		end
+
+		local goalX = targetPosition.X + v.X*timeTaken + 0.5 * a.X * timeTaken^2
+		local goalY = targetPosition.Y + v.Y*timeTaken + 0.5 * a.Y * timeTaken^2
+		local goalZ = targetPosition.Z + v.Z*timeTaken + 0.5 * a.Z * timeTaken^2
+		
+		return Vector3.new(goalX, goalY, goalZ)
+	end
+
+    local wallbang
+    local slientaim
+
+    local oldProjNew = tsg.Projectiles.Projectile.new
+    tsg.Projectiles.Projectile.new = function(self, hit, item, ammo, stren, func, ...) 
+        if slientaim.Enabled then
+            local velo = tsg.Items.getItemData(item).projectileVelocity
+            local closest = funcs.getClosestEntity()
+            if closest then
+                local grav = workspace.Gravity * 2
+                local calculated = LaunchDirection(hit.Position, FindLeadShot(closest.RootPart.Position, closest.RootPart.Velocity, velo, hit.Position, Vector3.zero, grav), velo, grav, false)
+                if calculated then
+                    shootStrength = 1
+                    hit = CFrame.lookAt(hit.Position, hit.Position + calculated)
+                    func = function(...)
+                        local bow = funcs.getBestItem(tsg.Items.ITEM_TYPES.RANGED_WEAPON, "rangedDamage")
+                        return remotes.shoot:InvokeServer(bow, ammo, hit.Position, hit.LookVector, shootStrength)
+                    end
+                end
+            end 
+        end
+
+        local ret = oldProjNew(self, hit, item, ammo, stren, func, ...)
+        if wallbang.Enabled then 
+            local chars = {}
+            for i, v in next, entity.entityList do table.insert(chars, v.Character) end
+            local rayparams = RaycastParams.new()
+            rayparams.FilterType = Enum.RaycastFilterType.Whitelist
+            rayparams.FilterDescendantsInstances = chars
+            ret.raycastParams = rayparams
+        end
+
         return ret
     end
 
-    local wallbang
+    slientaim = library:Toggle({
+        Name = "Bow Aimbot",
+        Default = false,
+        Function = function(value) end,
+        Tab = CombatTab,
+    })
+
+    library:Bind({
+        Name = "Bow Aimbot Bind",
+        Function = function() 
+            slientaim:Toggle()
+        end,
+        Default = false,
+        Tab = CombatTab,
+    })
+
     wallbang = library:Toggle({
         Name = "Arrow Wallbang",
         Default = false,
-        Function = function(value)
-            if value then 
-                local shoot = oldShoot or tsg.Projectiles.shoot
-                oldNew = hookfunction(debug.getupvalue(shoot, 1).new, newNew, function() 
-                    local old = debug.getupvalue(shoot, 1).new
-                    debug.getupvalue(shoot, 1).new = newNew
-                    return old
-                end)
-            end
-        end,
+        Function = function(value) end,
         Tab = CombatTab,
     })
 end
@@ -1375,9 +1827,9 @@ do
                         end
                         
                         local selfPos = entity.character.HumanoidRootPart.Position
-                        local bestPick = funcs.getBestItem("Pickaxe",  "pickaxeStrength")
-                        local bestAxe = funcs.getBestItem("Axe",  "axeStrength")
-                        local bestSword = funcs.getBestItem("Melee Weapon", "meleeDamage")
+                        local bestPick = funcs.getBestItem(tsg.Items.ITEM_TYPES.PICKAXE,  "pickaxeStrength")
+                        local bestAxe = funcs.getBestItem(tsg.Items.ITEM_TYPES.AXE,  "axeStrength")
+                        local bestSword = funcs.getBestItem(tsg.Items.ITEM_TYPES.MELEE_WEAPON, "meleeDamage")
 
                         for i, v in next, tsg.Structures do 
                             local placer = players:GetPlayerByUserId(v:GetAttribute("placedBy"))
@@ -1414,6 +1866,15 @@ do
         Tab = WorldTab,
     })
 
+    library:Bind({
+        Name = "Nuker Bind",
+        Function = function() 
+            nuker:Toggle()
+        end,
+        Default = false,
+        Tab = WorldTab,
+    })
+
     localCheck = library:Toggle({
         Name = "Ignore Self Placed",
         Default = true,
@@ -1427,6 +1888,77 @@ do
         Function = function() end,
         Tab = WorldTab,
     })
+    library:Seperator(WorldTab)
+end
+
+do -- CHEST STEALER
+    local chests = {}
+    local connections = {}
+    local PROX_STRUCTURE = "PROXIMITY_STRUCTURE"
+    local chestStealer; chestStealer = library:Toggle({
+        Name = "Chest Stealer",
+        Default = false,
+        Function = function(value) 
+            if value then 
+                for i,v in next, collectionService:GetTagged(PROX_STRUCTURE) do 
+                    if v.Name == "Chest" then 
+                        table.insert(chests, v)
+                    end
+                end
+                
+                table.insert(connections, collectionService:GetInstanceAddedSignal(PROX_STRUCTURE):Connect(function(inst) 
+                    if inst.Name == "Chest" then
+                        table.insert(chests, inst)
+                    end
+                end))
+
+                table.insert(connections, collectionService:GetInstanceRemovedSignal(PROX_STRUCTURE):Connect(function(inst) 
+                    local ind = table.find(chests, inst)
+                    if ind then 
+                        table.remove(chests, ind)
+                    end
+                end))
+
+                task.spawn(function() 
+                    repeat task.wait(.25) 
+                        if not entity.isAlive then 
+                            continue
+                        end
+
+                        for i, v in next, chests do
+                            if v:GetAttribute("inProximity") then 
+                                local contents = v:FindFirstChild("contents"):GetChildren()
+                                for _, v2 in next, contents do
+                                    local data = tsg.Items.getItemData(v2.Name)
+                                    tsg.TakeRemote:InvokeServer(v, data.id, v2.Value) -- chestInst, itemId, amount
+                                end
+                            end
+                        end
+
+                    until not chestStealer.Enabled
+                end)
+            else
+                for i, v in next, connections do 
+                    if v.Connected then 
+                        v:Disconnect()
+                    end
+                end
+                connections = {}
+                chests = {}
+            end
+        end,
+        Tab = WorldTab,
+    })
+
+    library:Bind({
+        Name = "Chest Stealer Bind",
+        Function = function() 
+            chestStealer:Toggle()
+        end,
+        Default = false,
+        Tab = WorldTab,
+    })
+
     library:Seperator(WorldTab)
 end
 
@@ -1480,7 +2012,7 @@ do -- AUTO MINE
             drawing.Text = text
             drawing.Size = 16
             drawing.Position = Vector2.new(pos.X, pos.Y)
-            drawing.ZIndex = pos.Z
+            drawing.ZIndex = 10000 - pos.Z
             drawing.Outline = true
             drawing.OutlineColor = Color3.new(0, 0, 0)
             drawing.Center = true
@@ -1526,7 +2058,7 @@ do -- AUTO MINE
                 end
     
                 drawing.Position = Vector2.new(pos.X, pos.Y)
-                drawing.ZIndex = pos.Z
+                drawing.ZIndex = 10000 - pos.Z
                 drawing.Text = text
             end
         end,
@@ -1617,8 +2149,8 @@ do -- AUTO MINE
                         end
                         
                         local selfPos = entity.character.HumanoidRootPart.Position
-                        local bestPick = funcs.getBestItem("Pickaxe",  "pickaxeStrength")
-                        local bestAxe = funcs.getBestItem("Axe",  "axeStrength")
+                        local bestPick = funcs.getBestItem(tsg.Items.ITEM_TYPES.PICKAXE,  "pickaxeStrength")
+                        local bestAxe = funcs.getBestItem(tsg.Items.ITEM_TYPES.AXE,  "axeStrength")
 
                         for i, v in next,tsg.Mineables do 
                             local magCheck = v.cf and ((v.cf.Position - selfPos).Magnitude < 16)
@@ -1651,6 +2183,15 @@ do -- AUTO MINE
                 highlightInstance.Adornee = nil
             end
         end,
+        Tab = WorldTab,
+    })
+
+    library:Bind({
+        Name = "Auto Mine Bind",
+        Function = function() 
+            automine:Toggle()
+        end,
+        Default = false,
         Tab = WorldTab,
     })
 
@@ -1688,6 +2229,17 @@ do -- AUTO MINE
         end,
         Tab = WorldTab,
     })
+
+    
+    library:Bind({
+        Name = "Resource ESP Bind",
+        Function = function() 
+            oreEsp:Toggle()
+        end,
+        Default = false,
+        Tab = WorldTab,
+    })
+
 
     oreEspDist = library:Toggle({
         Name = "Show Distance From Player",
@@ -1741,11 +2293,32 @@ do -- AUTO MINE
             resourceToggles[v.Name].Element.Element.Visible = resourceTogglesToggle.Enabled
         end
     end
+
+    library:Seperator(WorldTab)
 end
 
---library:Seperator()
+do -- NO WEATHER
+    local cached = "Clear"
+    local oldsetWeather
+    local noWeather = library:Toggle({
+        Name = "No Weather",
+        Tab = WorldTab,
+        Default = false,
+        Function = function(value) 
+            if value then 
+                tsg.AtmosphericLighting.setWeather("Clear")
+                oldsetWeather = hookfunction(tsg.AtmosphericLighting.setWeather, function(p1) 
+                    cached = p1 
+                end)
+            else
+                hookfunction(tsg.AtmosphericLighting.setWeather, oldsetWeather)
+                tsg.AtmosphericLighting.setWeather(cached)
+            end
+        end
+    })
+end
 
-do 
+if false then 
     local admins
     local function checkStaff(player) 
         if not player or typeof(player) ~= "Instance" then 
@@ -1792,6 +2365,32 @@ do
     })
 
     library:Seperator(MiscTab)
+end
+
+
+do -- Join Discord
+    library:Button({
+        Name = "Join/Copy Discord Invite",
+        Function = function() 
+            pcall(function()
+                (request or syn and syn.request)({
+                    Url = 'http://127.0.0.1:6463/rpc?v=1',
+                    Method = 'POST',
+                    Headers = {
+                        ['Content-Type'] = 'application/json',
+                        ['Origin'] = 'https://discord.com'
+                    },
+                    Body = httpService:JSONEncode({
+                        cmd = 'INVITE_BROWSER',
+                        nonce = httpService:GenerateGUID(false),
+                        args = {code = 'WYvnhbkwAA'}
+                    })
+                }) 
+            end)
+            setclipboard("https://discord.gg/WYvnhbkwAA")
+        end,
+        Tab = MiscTab,
+    })
 end
 
 -- UI HIDE:
