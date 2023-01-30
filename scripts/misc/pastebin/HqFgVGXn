@@ -1,0 +1,883 @@
+-- BarrierMain
+
+local BarrierMain = Instance.new("ScreenGui")
+local FullFrame = Instance.new("Frame")
+local UICorner = Instance.new("UICorner")
+local Games = Instance.new("ScrollingFrame")
+local Template = Instance.new("Frame")
+local UICorner_2 = Instance.new("UICorner")
+local Select = Instance.new("TextButton")
+local UICorner_3 = Instance.new("UICorner")
+local UITextSizeConstraint = Instance.new("UITextSizeConstraint")
+local Shadow = Instance.new("ImageLabel")
+local UICorner_4 = Instance.new("UICorner")
+local GameName = Instance.new("TextLabel")
+local UITextSizeConstraint_2 = Instance.new("UITextSizeConstraint")
+local Topbar = Instance.new("Frame")
+local UICorner_5 = Instance.new("UICorner")
+local TItle = Instance.new("TextLabel")
+local Exit = Instance.new("TextButton")
+local Corners = Instance.new("Frame")
+local UIListLayout = Instance.new("UIListLayout")
+local BehindShadow = Instance.new("ImageLabel")
+local Container = Instance.new("Frame")
+local Template_2 = Instance.new("Frame")
+local Content = Instance.new("TextLabel")
+local UITextSizeConstraint_3 = Instance.new("UITextSizeConstraint")
+local UICorner_6 = Instance.new("UICorner")
+
+--Properties:
+
+BarrierMain.Name = "BarrierMain"
+BarrierMain.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+BarrierMain.ResetOnSpawn = false
+
+
+FullFrame.Name = "FullFrame"
+FullFrame.Parent = BarrierMain
+FullFrame.BackgroundColor3 = Color3.fromRGB(83, 83, 83)
+FullFrame.BorderSizePixel = 0
+FullFrame.Position = UDim2.new(0.376041651, 0, 0.625579298, 0)
+FullFrame.Size = UDim2.new(0.247072667, 0, 0.256599545, 0)
+
+UICorner.CornerRadius = UDim.new(0, 12)
+UICorner.Parent = FullFrame
+
+
+Games.Name = "Games"
+Games.Parent = FullFrame
+Games.Active = true
+Games.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Games.BackgroundTransparency = 1.000
+Games.BorderSizePixel = 0
+Games.Position = UDim2.new(0, 0, 0.087, 0)
+Games.Size = UDim2.new(1, 0, 0.913, 0)
+Games.ZIndex = 3
+Games.CanvasSize = UDim2.new(0, 0, 4, 0)
+Games.ScrollBarThickness = 3
+
+Template.Name = "Template"
+Template.Parent = Games
+Template.BackgroundColor3 = Color3.fromRGB(0, 170, 127)
+Template.BorderSizePixel = 0
+Template.Position = UDim2.new(0.0337129571, 0, 0.0162549987, 0)
+Template.Size = UDim2.new(0.931999981, 0, 0.0496976785, 0)
+
+UICorner_2.CornerRadius = UDim.new(0, 12)
+UICorner_2.Parent = Template
+
+Select.Name = "Select"
+Select.Parent = Template
+Select.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Select.BorderSizePixel = 0
+Select.Position = UDim2.new(0.0331839584, 0, 0, 0)
+Select.Size = UDim2.new(0.966816068, 0, 0.99999994, 0)
+Select.Font = Enum.Font.GothamSemibold
+Select.Text = ""
+Select.TextColor3 = Color3.fromRGB(72, 72, 72)
+Select.TextSize = 1.000
+Select.TextTransparency = 1.000
+Select.TextWrapped = true
+Select.TextXAlignment = Enum.TextXAlignment.Right
+Select.TextYAlignment = Enum.TextYAlignment.Bottom
+
+UICorner_3.CornerRadius = UDim.new(0, 12)
+UICorner_3.Parent = Select
+
+UITextSizeConstraint.Parent = Select
+UITextSizeConstraint.MaxTextSize = 18
+
+Shadow.Name = "Shadow"
+Shadow.Parent = Template
+Shadow.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Shadow.BackgroundTransparency = 1.000
+Shadow.BorderSizePixel = 0
+Shadow.Position = UDim2.new(0, 0, 0.44183743, 0)
+Shadow.Size = UDim2.new(0.999999642, 0, 0.55816257, 0)
+Shadow.ZIndex = 2
+Shadow.Image = "rbxassetid://3602733521"
+Shadow.ImageColor3 = Color3.fromRGB(20, 20, 20)
+Shadow.ImageTransparency = 0.750
+
+UICorner_4.CornerRadius = UDim.new(0, 10)
+UICorner_4.Parent = Shadow
+
+GameName.Name = "GameName"
+GameName.Parent = Template
+GameName.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+GameName.BackgroundTransparency = 1.000
+GameName.BorderSizePixel = 0
+GameName.Position = UDim2.new(0.0664342567, 0, 0, 0)
+GameName.Size = UDim2.new(0.933565438, 0, 1.00000012, 0)
+GameName.Font = Enum.Font.GothamSemibold
+GameName.Text = "GameName"
+GameName.TextColor3 = Color3.fromRGB(70, 70, 70)
+GameName.TextScaled = true
+GameName.TextSize = 14.000
+GameName.TextWrapped = true
+GameName.TextXAlignment = Enum.TextXAlignment.Left
+
+UITextSizeConstraint_2.Parent = GameName
+UITextSizeConstraint_2.MaxTextSize = 19
+
+Topbar.Name = "Topbar"
+Topbar.Parent = FullFrame
+Topbar.BackgroundColor3 = Color3.fromRGB(59, 59, 59)
+Topbar.BorderSizePixel = 0
+Topbar.Position = UDim2.new(0, 0, -0.161062986, 0)
+Topbar.Size = UDim2.new(1, 0, 0.161062986, 0)
+Topbar.ZIndex = 3
+
+UICorner_5.CornerRadius = UDim.new(0, 12)
+UICorner_5.Parent = Topbar
+
+TItle.Name = "TItle"
+TItle.Parent = Topbar
+TItle.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+TItle.BackgroundTransparency = 1.000
+TItle.BorderSizePixel = 0
+TItle.Position = UDim2.new(0.0294968653, 0, 0.393864065, 0)
+TItle.Size = UDim2.new(0.66283536, 0, 0.463818252, 0)
+TItle.ZIndex = 3
+TItle.Font = Enum.Font.GothamSemibold
+TItle.Text = "Barrier Remover"
+TItle.TextColor3 = Color3.fromRGB(255, 255, 255)
+TItle.TextScaled = true
+TItle.TextSize = 14.000
+TItle.TextWrapped = true
+TItle.TextXAlignment = Enum.TextXAlignment.Left
+
+Exit.Name = "Exit"
+Exit.Parent = Topbar
+Exit.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Exit.BackgroundTransparency = 1.000
+Exit.BorderSizePixel = 0
+Exit.Position = UDim2.new(0.910657585, 0, 0.304082751, 0)
+Exit.Size = UDim2.new(0.064845629, 0, 0.603194058, 0)
+Exit.ZIndex = 3
+Exit.Font = Enum.Font.Gotham
+Exit.Text = "X"
+Exit.TextColor3 = Color3.fromRGB(255, 255, 255)
+Exit.TextScaled = true
+Exit.TextSize = 14.000
+Exit.TextWrapped = true
+
+Corners.Name = "Corners"
+Corners.Parent = FullFrame
+Corners.BackgroundColor3 = Color3.fromRGB(59, 59, 59)
+Corners.BorderSizePixel = 0
+Corners.Position = UDim2.new(0, 0, -0.0659557581, 0)
+Corners.Size = UDim2.new(1, 0, 0.110593587, 0)
+Corners.ZIndex = 2
+
+BehindShadow.Name = "BehindShadow"
+BehindShadow.Parent = FullFrame
+BehindShadow.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+BehindShadow.BackgroundTransparency = 1.000
+BehindShadow.BorderSizePixel = 0
+BehindShadow.Position = UDim2.new(-0.0539684519, 0, -0.563814223, 0)
+BehindShadow.Size = UDim2.new(1.10517657, 0, 2.02495098, 0)
+BehindShadow.ZIndex = -1
+BehindShadow.Image = "rbxassetid://3523728077"
+BehindShadow.ImageColor3 = Color3.fromRGB(33, 33, 33)
+BehindShadow.ImageTransparency = 0.750
+
+Container.Name = "Container"
+Container.Parent = BarrierMain
+Container.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Container.BackgroundTransparency = 1.000
+Container.BorderSizePixel = 0
+Container.Position = UDim2.new(0.343229175, 0, 0.0689699128, 0)
+Container.Size = UDim2.new(0.312642217, 0, 0.436531633, 0)
+
+Template_2.Name = "Template"
+Template_2.Parent = Container
+Template_2.AnchorPoint = Vector2.new(0.5, 0.5)
+Template_2.BackgroundColor3 = Color3.fromRGB(0, 140, 103)
+Template_2.BackgroundTransparency = 1.000
+Template_2.BorderSizePixel = 0
+Template_2.Position = UDim2.new(0.5, 0, 0.0500000007, 0)
+Template_2.Size = UDim2.new(1, 0, 0.0585898906, 0)
+Template_2.ZIndex = 100
+
+Content.Name = "Content"
+Content.Parent = Template_2
+Content.AnchorPoint = Vector2.new(0.5, 0.5)
+Content.BackgroundColor3 = Color3.fromRGB(0, 115, 84)
+Content.BackgroundTransparency = 1.000
+Content.BorderSizePixel = 0
+Content.Position = UDim2.new(0.5, 0, 0.5, 0)
+Content.Size = UDim2.new(0.964835048, 0, 1, 0)
+Content.ZIndex = 100
+Content.Font = Enum.Font.GothamBold
+Content.Text = "W"
+Content.TextColor3 = Color3.fromRGB(255, 255, 255)
+Content.TextScaled = true
+Content.TextSize = 16.000
+Content.TextTransparency = 1.000
+Content.TextWrapped = true
+
+UITextSizeConstraint_3.Parent = Content
+UITextSizeConstraint_3.MaxTextSize = 16
+
+UICorner_6.CornerRadius = UDim.new(0, 10)
+UICorner_6.Parent = Content
+
+UIListLayout.Parent = Games
+UIListLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
+UIListLayout.Padding = UDim.new(0, 10)
+
+
+-- Scripts:
+
+local VersionNum = 0.989
+
+local NotifStack = {}
+local Event = Instance.new("BindableEvent")
+local NILINS = false
+local NILINS2 = false
+
+Event.Name = "Fire"
+Event.Parent = BarrierMain
+
+
+local PosToGo = 0
+local GamesTable = {
+
+	FrV5 = {Name = "Frappé® V5", Colour = Color3.fromRGB(170, 85, 127)},
+	FrV4 = {Name = "Frappé® V4", Colour = Color3.fromRGB(0, 170, 127)},
+	Fizze = {Name = "Fizze V1", Colour = Color3.fromRGB(143, 76, 236)},
+	Verde = {Name = "Verde", Colour = Color3.fromRGB(0, 208, 100)},
+	Venti = {Name = "Venti®", Colour = Color3.fromRGB(0, 170, 255)},
+	GLH = {Name = "Grand Luxe Hotels", Colour = Color3.fromRGB(212, 170, 17)},
+	NixCafe = {Name = "Nix Cafe", Colour = Color3.fromRGB(20, 110, 255)},
+	BurgerKing = {Name = "Burger King", Colour = Color3.fromRGB(230, 39, 5)},
+	Pastriez = {Name = "Pastriez", Colour = Color3.fromRGB(221, 61, 235)},
+	BobaV2 = {Name = "Boba V2", Colour = Color3.fromRGB(0, 170, 127)},
+	Jusu = {Name = "Jusu", Colour = Color3.fromRGB(255, 135, 14)},
+	Cortado = {Name = "Cortado", Colour = Color3.fromRGB(170, 145, 68)},
+	Kohau = {Name = "Kohaú", Colour = Color3.fromRGB(255, 94, 19)},
+	Bakiez = {Name = "Bakiez", Colour = Color3.fromRGB(203, 69, 255)},
+
+}
+FullFrame.Games.Template.Visible = false
+for _, GameTable in pairs(GamesTable) do
+
+	local GameV = FullFrame.Games:FindFirstChild("Template"):Clone()
+	GameV.Parent = FullFrame.Games
+	GameV.GameName.Text = GameTable.Name
+	if PosToGo == 0 then
+		PosToGo = 0.016
+	else
+		PosToGo = PosToGo + 0.06
+	end
+	GameV.BackgroundColor3 = GameTable.Colour
+	GameV.Size = UDim2.new(0.932, 0, 0.05, 0)
+	GameV.Position = UDim2.new(0.029,0,PosToGo,0)
+	GameV.Visible = true
+	GameV.Name = GameTable.Name
+end
+
+function figureNotifs(Stack,Container)
+
+	local stacksize = 0
+
+	local i = #Stack
+	while i > 0 do
+		local gui = Stack[i]
+		if gui then
+			if stacksize == 0 then
+				stacksize = 0.05
+			else
+				stacksize = stacksize+0.075
+			end
+			local desiredpos = UDim2.new(0.5,0,stacksize,0)
+			if gui.Position ~= desiredpos then
+				gui:TweenPosition(desiredpos,"Out","Quint",0.3,true)
+			end
+		end
+		i = i-1
+	end
+end
+
+function pendNotifSmall(Content,Colour,Font)
+	spawn(function()
+		local notificationContainer = Container
+		local Notification = notificationContainer:WaitForChild('Template')	
+		local notifClone = Notification:Clone()
+		local notifContent = notifClone:WaitForChild('Content')
+		if Font == "GothamSemiBold" then
+			Font = "GothamSemibold"
+		end
+		notifContent.BackgroundColor3 = Colour
+		notifContent.Font = Font
+		notifContent.TextTransparency = 1
+		notifContent.BackgroundTransparency = 1
+		notifClone.Name = 'Notif Clone'
+		notifClone.Visible = true
+		notifContent.Text = Content
+		notifClone.Parent = Container
+		notifClone.Position = UDim2.new(0.5,0,-0.1,0)
+		wait(0.001)
+		notifContent.Size = UDim2.new(0, math.max(18, notifContent.TextBounds.X * 1.2),1, 0)
+		wait(0.5)
+		notifClone:TweenPosition(UDim2.new(0.5,0,0.05,0),'Out','Quint',0.3,true)
+		local transitionInfo = TweenInfo.new(0.35, Enum.EasingStyle.Quint)
+		local tween = game:GetService("TweenService"):Create(notifContent, transitionInfo, {BackgroundTransparency = 0})
+		tween:Play()
+		local transitionInfo = TweenInfo.new(0.35, Enum.EasingStyle.Quint)
+		local tween = game:GetService("TweenService"):Create(notifContent, transitionInfo, {TextTransparency = 0})
+		tween:Play()
+		table.insert(NotifStack,notifClone)
+		figureNotifs(NotifStack,notificationContainer)
+
+
+		wait(7)
+		for a,b in pairs(NotifStack) do
+			if b == notifClone then
+				table.remove(NotifStack,a)
+			end
+		end
+		wait(0.05)
+		notifClone:TweenPosition(UDim2.new(0.5,0,notifClone.Position.Y.Scale+0.1,0),'Out','Quint',0.3,true)
+		local transitionInfo = TweenInfo.new(0.3, Enum.EasingStyle.Quint)
+		local tween = game:GetService("TweenService"):Create(notifContent, transitionInfo, {BackgroundTransparency = 1})
+		tween:Play()
+		local transitionInfo = TweenInfo.new(0.3, Enum.EasingStyle.Quint)
+		local tween = game:GetService("TweenService"):Create(notifContent, transitionInfo, {TextTransparency = 1})
+		tween:Play()
+		wait(0.305)
+		notifClone:Destroy()
+		figureNotifs(NotifStack,notificationContainer)
+	end)
+end
+
+
+
+local mt = getrawmetatable(game)
+local old = mt.__namecall
+local protect = newcclosure or protect_function
+
+if not protect then
+	protect = function(f) return f end
+end
+
+setreadonly(mt, false)
+mt.__namecall = protect(function(self, ...)
+	local method = getnamecallmethod()
+	if method == "Kick" then
+		pendNotifSmall("We stopped this game from kicking you locally",Color3.fromRGB(15, 107, 255),"GothamSemibold")
+		wait(9e9)
+		return
+	end
+	return old(self, ...)
+end)
+
+hookfunction(game.Players.LocalPlayer.Kick,protect(function() wait(9e9) end))
+
+FullFrame.Size = UDim2.new(0.224, 0, 0.208, 0)
+FullFrame.Parent = BarrierMain
+FullFrame.Position = UDim2.new(0.376, 0, 1.2, 0)
+
+for _, UI in ipairs(game.Players.LocalPlayer.PlayerGui:GetChildren()) do
+	if UI.Name == "BarrierMain" and UI ~= BarrierMain then
+		if UI:FindFirstChild("FullFrame") then
+			pendNotifSmall("Removing previous interface to declutter",Color3.fromRGB(85, 170, 127),"GothamSemibold")
+			UI.FullFrame:TweenPosition(UDim2.new(0.376, 0, 0.626, 0), "Out", "Quint", 0.6)
+			wait(0.61)
+			UI.FullFrame:TweenSizeAndPosition(UDim2.new(0.224, 0, 0.208, 0),UDim2.new(0.376, 0, 1.2, 0),"In", "Quint", 0.8)	
+			wait(0.81)
+			UI:Destroy()
+		end
+	end
+end
+
+wait(0.5)
+pendNotifSmall("Booting BarrierRemover v"..tostring(VersionNum)..".",Color3.fromRGB(0, 107, 156),"GothamSemibold")
+wait(2)
+pendNotifSmall("Booting client anti-kick",Color3.fromRGB(0, 107, 156),"GothamSemibold")
+wait(1)
+pendNotifSmall("WARNING! You could get banned using BarrierRemover, even without staff being in-game.",Color3.fromRGB(235, 67, 15),"GothamSemibold")
+FullFrame:TweenSizeAndPosition(UDim2.new(0.247, 0, 0.256, 0),UDim2.new(0.376, 0, 0.626, 0),"Out", "Quint", 0.8)
+
+
+
+
+function Work(Name)
+	local num = 0
+
+	if Name == "Frappé® V5" then --  Frappe V5
+
+		if workspace:FindFirstChild("System") then
+			if workspace.System:FindFirstChild("Barrier") then
+				workspace.System["Barrier"]:Destroy()
+				pendNotifSmall("Removed System Barrier",Color3.fromRGB(25, 117, 255),"GothamSemibold")
+				num = num + 1
+			end
+			if workspace.System:FindFirstChild("Counter") then
+				workspace.System.Counter:Destroy()
+				pendNotifSmall("Removed Counter Barrier",Color3.fromRGB(25, 117, 255),"GothamSemibold")
+				num = num + 1
+			end
+		end
+		if workspace:FindFirstChild("Barista") then
+			workspace.Barista:Destroy()
+			pendNotifSmall("Removed Barista Barrier",Color3.fromRGB(25, 117, 255),"GothamSemibold")
+			num = num + 1
+		end
+		if workspace:FindFirstChild("Premium") then
+			workspace.Premium:Destroy()
+			pendNotifSmall("Removed Premium Barrier",Color3.fromRGB(25, 117, 255),"GothamSemibold")
+			num = num + 1
+		end
+		if workspace:FindFirstChild("Barista2") then
+			workspace.Barista2:Destroy()
+			pendNotifSmall("Removed Barista2 Barrier",Color3.fromRGB(25, 117, 255),"GothamSemibold")
+			num = num + 1
+		end
+		if workspace:FindFirstChild("Staff") then
+			workspace.Staff:Destroy()
+			pendNotifSmall("Removed Staff Barrier",Color3.fromRGB(25, 117, 255),"GothamSemibold")
+			num = num + 1
+		end
+	elseif Name == "Frappé® V4" then --  Frappe V4
+		if workspace:FindFirstChild("i") then
+			workspace["i"]:Destroy()
+			pendNotifSmall("Removed Staff Barrier",Color3.fromRGB(25, 117, 255),"GothamSemibold")
+			num = num + 1
+		end
+		if workspace:FindFirstChild("CounterRestriction") then
+			workspace["CounterRestriction"]:Destroy()
+			pendNotifSmall("Removed Barista Barrier",Color3.fromRGB(25, 117, 255),"GothamSemibold")
+			num = num + 1
+		end
+		if workspace:FindFirstChild("Barrier") then
+			workspace["Barrier"]:Destroy()
+			pendNotifSmall("Removed Barista Barrier 2",Color3.fromRGB(25, 117, 255),"GothamSemibold")
+			num = num + 1
+		end
+		if workspace:FindFirstChild("Inactivity") then
+			workspace["Inactivity"]:Destroy()
+			pendNotifSmall("Removed Barista Barrier 3",Color3.fromRGB(25, 117, 255),"GothamSemibold")
+			num = num + 1
+		end
+		if workspace:FindFirstChild("Trainee") then
+			workspace["Trainee"]:Destroy()
+			pendNotifSmall("Removed Barista Barrier 4",Color3.fromRGB(25, 117, 255),"GothamSemibold")
+			num = num + 1
+		end
+	elseif Name == "Bakiez" then
+		if workspace:FindFirstChild("Invis") then
+			workspace["Invis"]:Destroy()
+			pendNotifSmall("Removed Counter Barriers",Color3.fromRGB(25, 117, 255),"GothamSemibold")
+			num = num + 1
+		end
+		if workspace:FindFirstChild("Functional") then
+			if workspace.Functional:FindFirstChild("Doors") then
+				workspace.Functional["Doors"]:Destroy()
+				pendNotifSmall("Removed Kitchen Doors",Color3.fromRGB(25, 117, 255),"GothamSemibold")
+				num = num + 1
+			end
+			if workspace.Functional:FindFirstChild("Workplace") then
+				workspace.Functional["Workplace"]:Destroy()
+				pendNotifSmall("Removed Counter Barriers 2",Color3.fromRGB(25, 117, 255),"GothamSemibold")
+				num = num + 1
+			end
+			if workspace.Functional:FindFirstChild("VIPLounge") then
+				workspace.Functional["VIPLounge"]:Destroy()
+				pendNotifSmall("Removed VIPLounge Door",Color3.fromRGB(25, 117, 255),"GothamSemibold")
+				num = num + 1
+			end
+		end
+	elseif Name == "Fizze V1" then --  Fizze
+		if workspace:FindFirstChild("StaffDoors") then
+			workspace["StaffDoors"]:Destroy()
+			pendNotifSmall("Removed Staff Barriers",Color3.fromRGB(25, 117, 255),"GothamSemibold")
+			num = num + 1
+		end
+		if workspace:FindFirstChild("Barriers") then
+			workspace["Barriers"]:Destroy()
+			pendNotifSmall("Removed Main Barriers",Color3.fromRGB(25, 117, 255),"GothamSemibold")
+			num = num + 1
+		end
+		if workspace:FindFirstChild("BoatBarriers") then
+			workspace["BoatBarriers"]:Destroy()
+			pendNotifSmall("Removed Boat Barriers",Color3.fromRGB(25, 117, 255),"GothamSemibold")
+			num = num + 1
+		end
+		if workspace:FindFirstChild("Floor") then
+			workspace["Floor"]:Destroy()
+			pendNotifSmall("Removed Floor detector",Color3.fromRGB(25, 117, 255),"GothamSemibold")
+			num = num + 1
+		end
+	elseif Name == "Burger King" then
+		if workspace:FindFirstChild("kitchendoor") then
+			workspace["kitchendoor"]:Destroy()
+			pendNotifSmall("Removed Kitchen Door",Color3.fromRGB(25, 117, 255),"GothamSemibold")
+			num = num + 1
+		end
+	elseif Name == "Verde" then --  Verde
+		for _, camerapart in ipairs(workspace.Camera:GetChildren()) do
+			if camerapart.ClassName == "Part" and camerapart.Name == "Part" then
+				camerapart:Destroy()
+				pendNotifSmall("Removed Camera Barrier",Color3.fromRGB(25, 117, 255),"GothamSemibold")
+				num = num + 1
+			end
+		end
+		if workspace:FindFirstChild("BGMusicSound") then
+			if workspace["BGMusicSound"].Volume ~= 0 then
+				workspace["BGMusicSound"].Volume = 0
+				pendNotifSmall("Muting horrible music",Color3.fromRGB(25, 117, 255),"GothamSemibold")
+				num = num + 1
+			end
+		end
+		if workspace:FindFirstChild("Map") then
+			for _, PartUnderWS in ipairs(workspace.Map:GetChildren()) do
+				for _, PartUnderPart in ipairs(PartUnderWS:GetChildren()) do
+					if PartUnderPart.ClassName == "Script" or PartUnderPart == "TouchTransmitter" then
+						PartUnderPart:Destroy()
+						pendNotifSmall("Removed Fake Uniform Giver",Color3.fromRGB(25, 117, 255),"GothamSemibold")
+						num = num + 1
+					end
+				end
+			end
+		end
+
+
+		if game.Players.LocalPlayer.PlayerGui:FindFirstChild("MainUI") then
+			if game.Players.LocalPlayer.PlayerGui.MainUI:FindFirstChild("MenuFrame") then
+				if game.Players.LocalPlayer.PlayerGui.MainUI.MenuFrame:FindFirstChild("MusicClient") then
+					game.Players.LocalPlayer.PlayerGui.MainUI.MenuFrame["MusicClient"]:Destroy()
+					pendNotifSmall("Removed really sneaky anti fly",Color3.fromRGB(25, 117, 255),"GothamSemibold")
+					num = num + 1
+				end
+			end
+		end
+		if game:GetService("ReplicatedStorage"):FindFirstChild("MusicEvent") then
+			game:GetService("ReplicatedStorage")["MusicEvent"]:Destroy()
+		end
+		local nils = getnilinstances()
+
+		for _, Ins in ipairs(nils) do
+			if Ins.ClassName == "LocalScript" then
+				Ins.Disabled = true
+				Ins:Destroy()
+				if NILINS2 == false then
+					NILINS = true
+				end
+			end
+		end
+		if NILINS == true then
+			NILINS2 = true
+			NILINS = false
+			pendNotifSmall("Removed nil instances (AntiExploits)",Color3.fromRGB(25, 117, 255),"GothamSemibold")
+			num = num + 1
+		end
+		if workspace:FindFirstChild("Doors") then
+			for _, Door in ipairs(workspace["Doors"]:GetChildren()) do
+				if Door.CanCollide == true then
+					Door.CanCollide = false
+					pendNotifSmall("CanCollide disabled for doors",Color3.fromRGB(25, 117, 255),"GothamSemibold")
+					break
+				end
+			end
+			for _, Door in ipairs(workspace["Doors"]:GetChildren()) do
+				if Door.CanCollide == true then
+					Door.CanCollide = false
+				end
+			end
+
+			num = num + 1
+		end
+		if workspace:FindFirstChild("Gamepass Doors") then
+			workspace["Gamepass Doors"]:Destroy()
+			pendNotifSmall("Removed Gamepass Barriers",Color3.fromRGB(25, 117, 255),"GothamSemibold")
+			num = num + 1
+		end
+		if game.Players.LocalPlayer.Backpack:FindFirstChild("LocalDoors") then
+			game.Players.LocalPlayer.Backpack:FindFirstChild("LocalDoors"):Destroy()
+			pendNotifSmall("Removed LocalDoors Script",Color3.fromRGB(25, 117, 255),"GothamSemibold")
+			num = num + 1
+		end
+
+
+
+	elseif Name == "Venti®" then
+		if game.Players.LocalPlayer.PlayerScripts:FindFirstChild("hello") then
+			game.Players.LocalPlayer.PlayerScripts["hello"]:Destroy()
+			pendNotifSmall("Removed AntiExploit (1)",Color3.fromRGB(25, 117, 255),"GothamSemibold")
+			num = num + 1
+		end
+		if game.Players.LocalPlayer.PlayerScripts:FindFirstChild("goodbye") then
+			game.Players.LocalPlayer.PlayerScripts["goodbye"]:Destroy()
+			pendNotifSmall("Removed AntiExploit (2)",Color3.fromRGB(25, 117, 255),"GothamSemibold")
+			num = num + 1
+		end
+		if workspace:FindFirstChild("StaffMainDoorFrameModel") then
+			workspace["StaffMainDoorFrameModel"]:Destroy()
+			pendNotifSmall("Removed StaffMainDoor Barrier",Color3.fromRGB(25, 117, 255),"GothamSemibold")
+			num = num + 1
+		end
+		if workspace:FindFirstChild("MiddleMainDoorFrameModel") then
+			workspace["MiddleMainDoorFrameModel"]:Destroy()
+			pendNotifSmall("Removed MiddleMainDoorFrame Barrier",Color3.fromRGB(25, 117, 255),"GothamSemibold")
+			num = num + 1
+		end
+		if workspace:FindFirstChild("GamepassDoor1") then
+			workspace["GamepassDoor1"]:Destroy()
+			pendNotifSmall("Removed GamepassDoor1",Color3.fromRGB(25, 117, 255),"GothamSemibold")
+			num = num + 1
+		end
+		if workspace:FindFirstChild("GamepassDoor2") then
+			workspace["GamepassDoor2"]:Destroy()
+			pendNotifSmall("Removed GamepassDoor2",Color3.fromRGB(25, 117, 255),"GothamSemibold")
+			num = num + 1
+		end
+		if workspace:FindFirstChild("GamepassDoor3") then
+			workspace["GamepassDoor3"]:Destroy()
+			pendNotifSmall("Removed GamepassDoor3",Color3.fromRGB(25, 117, 255),"GothamSemibold")
+			num = num + 1
+		end
+		if workspace:FindFirstChild("GamepassDoor4") then
+			workspace["GamepassDoor4"]:Destroy()
+			pendNotifSmall("Removed GamepassDoor4",Color3.fromRGB(25, 117, 255),"GothamSemibold")
+			num = num + 1
+		end
+		if workspace:FindFirstChild("GamepassDoor5") then
+			workspace["GamepassDoor5"]:Destroy()
+			pendNotifSmall("Removed GamepassDoor5",Color3.fromRGB(25, 117, 255),"GothamSemibold")
+			num = num + 1
+		end
+		if workspace:FindFirstChild("GamepassDoor6") then
+			workspace["GamepassDoor6"]:Destroy()
+			pendNotifSmall("Removed GamepassDoor6",Color3.fromRGB(25, 117, 255),"GothamSemibold")
+			num = num + 1
+		end
+		if workspace:FindFirstChild("GamepassDoor7") then
+			workspace["GamepassDoor7"]:Destroy()
+			pendNotifSmall("Removed GamepassDoor7",Color3.fromRGB(25, 117, 255),"GothamSemibold")
+			num = num + 1
+		end
+		if workspace:FindFirstChild("GamepassDoor8") then
+			workspace["GamepassDoor8"]:Destroy()
+			pendNotifSmall("Removed GamepassDoor8",Color3.fromRGB(25, 117, 255),"GothamSemibold")
+			num = num + 1
+		end
+		if workspace:FindFirstChild("GamepassDoor9") then
+			workspace["GamepassDoor9"]:Destroy()
+			pendNotifSmall("Removed GamepassDoor9",Color3.fromRGB(25, 117, 255),"GothamSemibold")
+			num = num + 1
+		end
+	elseif Name == "Kohaú" and game.PlaceId == 4375619868 then
+		if workspace:FindFirstChild("Employee Areas") then
+			workspace["Employee Areas"]:Destroy()
+			pendNotifSmall("Removed Employee Areas folder",Color3.fromRGB(25, 117, 255),"GothamSemibold")
+			num = num + 1
+		end
+		if workspace:FindFirstChild("Kitchen Respawn") then
+			workspace["Kitchen Respawn"]:Destroy()
+			pendNotifSmall("Removed Kitchen Respawn part",Color3.fromRGB(25, 117, 255),"GothamSemibold")
+			num = num + 1
+		end
+	elseif Name == "Cortado" and game.PlaceId == 3522042406 then
+		if game.Players.LocalPlayer.PlayerGui:FindFirstChild("ADEL") then
+			game.Players.LocalPlayer.PlayerGui["ADEL"]:Destroy()
+			pendNotifSmall("Removed AntiExploit (Could have banned you)",Color3.fromRGB(25, 117, 255),"GothamSemibold")
+			num = num + 1
+		end
+		wait(0.1)
+		if workspace:FindFirstChild("Employee Areas") then
+			workspace["Employee Areas"]:Destroy()
+			pendNotifSmall("Removed Employee Areas folder",Color3.fromRGB(25, 117, 255),"GothamSemibold")
+			num = num + 1
+		end
+		if game.Players.LocalPlayer.PlayerScripts:FindFirstChild("B") then
+			game.Players.LocalPlayer.PlayerScripts["B"]:Destroy()
+			pendNotifSmall("Removed General AntiExploit",Color3.fromRGB(25, 117, 255),"GothamSemibold")
+			num = num + 1
+		end
+	elseif Name == "Jusu" then
+		if workspace:FindFirstChild("GamepassDoors") then
+			workspace["GamepassDoors"]:Destroy()
+			pendNotifSmall("Removed Gamepass Doors",Color3.fromRGB(25, 117, 255),"GothamSemibold")
+			num = num + 1
+		end
+		if workspace:FindFirstChild("delete") then
+			workspace["delete"]:Destroy()
+			pendNotifSmall("Removed Kitchen Folder",Color3.fromRGB(25, 117, 255),"GothamSemibold")
+			num = num + 1
+		end
+	elseif Name == "Grand Luxe Hotels" then
+		for _, Door in ipairs(workspace:GetChildren()) do
+			if Door.Name == "BG_VipDoor" then
+				Door:Destroy()
+				pendNotifSmall("Removed Queue Barriers",Color3.fromRGB(25, 117, 255),"GothamSemibold")
+				num = num + 1
+			end
+		end
+		if workspace:FindFirstChild("Staff Door") then
+			workspace["Staff Door"]:Destroy()
+			pendNotifSmall("Removed Staff Door",Color3.fromRGB(25, 117, 255),"GothamSemibold")
+			num = num + 1
+		end
+		if workspace:FindFirstChild("RankDoors") then
+			workspace["RankDoors"]:Destroy()
+			pendNotifSmall("Removed Rank Doors",Color3.fromRGB(25, 117, 255),"GothamSemibold")
+			num = num + 1
+		end
+	elseif Name == "Nix Cafe" then
+		if workspace:FindFirstChild("Barriers") then
+			workspace["Barriers"]:Destroy()
+			pendNotifSmall("Removed Counter Barriers",Color3.fromRGB(25, 117, 255),"GothamSemibold")
+			num = num + 1
+		end
+	elseif Name == "Pastriez" then
+		if workspace:FindFirstChild("RemoveForAll") then
+			workspace["RemoveForAll"]:Destroy()
+			pendNotifSmall("Removed Counter Barriers",Color3.fromRGB(25, 117, 255),"GothamSemibold")
+			num = num + 1
+		end
+		if workspace:FindFirstChild("CASHIERBLOCK") then
+			workspace["CASHIERBLOCK"]:Destroy()
+			pendNotifSmall("Removed Kitchen Doors",Color3.fromRGB(25, 117, 255),"GothamSemibold")
+			num = num + 1
+		end
+		if workspace:FindFirstChild("UniformGivers") then
+			workspace["UniformGivers"]:Destroy()
+			pendNotifSmall("Removed Fake Uniform Givers",Color3.fromRGB(25, 117, 255),"GothamSemibold")
+			num = num + 1
+		end
+		if workspace:FindFirstChild("SecondFloorDoor2") then
+			workspace["SecondFloorDoor2"]:Destroy()
+			pendNotifSmall("Removed Floor Detector",Color3.fromRGB(25, 117, 255),"GothamSemibold")
+			num = num + 1
+		end
+		if workspace:FindFirstChild("SecondFloorDoor") then
+			workspace["SecondFloorDoor"]:Destroy()
+			pendNotifSmall("Removed Floor Detector 2",Color3.fromRGB(25, 117, 255),"GothamSemibold")
+			num = num + 1
+		end
+		if workspace:FindFirstChild("KickPlayerIfNotRanked") then
+			workspace["KickPlayerIfNotRanked"]:Destroy()
+			pendNotifSmall("Removed KickPlayerIfNotRanked floor detector",Color3.fromRGB(25, 117, 255),"GothamSemibold")
+			num = num + 1
+		end
+		if game.Players.LocalPlayer.PlayerScripts:FindFirstChild("AntiWeld") then
+			game.Players.LocalPlayer.PlayerScripts["AntiWeld"]:Destroy()
+			pendNotifSmall("Removed Anti-Fly (AntiExploit)",Color3.fromRGB(25, 117, 255),"GothamSemibold")
+			num = num + 1
+		end
+		if game.Players.LocalPlayer.PlayerScripts:FindFirstChild("AntiVR") then
+			game.Players.LocalPlayer.PlayerScripts["AntiVR"]:Destroy()
+			pendNotifSmall("Removed Anti-VR (AntiExploit)",Color3.fromRGB(25, 117, 255),"GothamSemibold")
+			num = num + 1
+		end
+	elseif Name == "Boba V2" then
+		if workspace:FindFirstChild("GroupDoorA") then
+			workspace["GroupDoorA"]:Destroy()
+			pendNotifSmall("Removed Group Door",Color3.fromRGB(25, 117, 255),"GothamSemibold")
+			num = num + 1
+		end
+		if workspace:FindFirstChild("GroupDoorB") then
+			workspace["GroupDoorB"]:Destroy()
+			pendNotifSmall("Removed Group Door 2",Color3.fromRGB(25, 117, 255),"GothamSemibold")
+			num = num + 1
+		end
+		if workspace:FindFirstChild("GroupDoorC") then
+			workspace["GroupDoorC"]:Destroy()
+			pendNotifSmall("Removed Group Door 3",Color3.fromRGB(25, 117, 255),"GothamSemibold")
+			num = num + 1
+		end
+		if workspace:FindFirstChild("GroupDoorD") then
+			workspace["GroupDoorD"]:Destroy()
+			pendNotifSmall("Removed Group Door 4",Color3.fromRGB(25, 117, 255),"GothamSemibold")
+			num = num + 1
+		end
+		if workspace:FindFirstChild("PremiumDoor") then
+			workspace["PremiumDoor"]:Destroy()
+			pendNotifSmall("Removed Premium Door",Color3.fromRGB(25, 117, 255),"GothamSemibold")
+			num = num + 1
+		end
+		if workspace:FindFirstChild("UniformDoor") then
+			workspace["UniformDoor"]:Destroy()
+			pendNotifSmall("Removed Uniform Door",Color3.fromRGB(25, 117, 255),"GothamSemibold")
+			num = num + 1
+		end
+		if workspace:FindFirstChild("HiddenDoor") then
+			workspace["HiddenDoor"]:Destroy()
+			pendNotifSmall("Removed Hidden Door",Color3.fromRGB(25, 117, 255),"GothamSemibold")
+			num = num + 1
+		end
+	end
+	if num ~= 0 then
+		wait(2)
+		if num == 1 then
+			pendNotifSmall("Successfully removed 1 instance",Color3.fromRGB(0, 170, 127),"GothamSemibold")
+		else
+			pendNotifSmall("Successfully removed ".. tostring(num) .." instances",Color3.fromRGB(0, 170, 127),"GothamSemibold")
+		end
+		num = 0
+	else
+		pendNotifSmall("We couldn't find any instances to remove",Color3.fromRGB(244, 163, 0),"GothamSemibold")
+		num = 0
+	end
+end
+
+
+
+for _, GameVV in ipairs(FullFrame.Games:GetChildren()) do
+	if GameVV.ClassName == "Frame" then
+		GameVV.Select.MouseButton1Click:Connect(function()
+			Work(GameVV.Select.Parent.Name)
+		end)
+	end
+end
+
+
+local UserInputService = game:GetService("UserInputService")
+
+local gui = FullFrame
+local draggui = Topbar
+
+local dragging
+local dragInput
+local dragStart
+local startPos
+
+local function update(input)
+	local delta = input.Position - dragStart
+	gui.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+end
+
+draggui.InputBegan:Connect(function(input)
+	if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+		dragging = true
+		dragStart = input.Position
+		startPos = gui.Position
+
+		input.Changed:Connect(function()
+			if input.UserInputState == Enum.UserInputState.End then
+				dragging = false
+			end
+		end)
+	end
+end)
+
+draggui.InputChanged:Connect(function(input)
+	if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+		dragInput = input
+	end
+end)
+
+UserInputService.InputChanged:Connect(function(input)
+	if input == dragInput and dragging then
+		update(input)
+	end
+end)
+
+Exit.MouseButton1Click:Connect(function()
+	pendNotifSmall("Quitting BarrierRemover.",Color3.fromRGB(15, 107, 255),"GothamSemibold")
+	FullFrame:TweenPosition(UDim2.new(0.376, 0, 0.626, 0), "Out", "Quint", 0.6)
+	wait(0.61)
+	FullFrame:TweenSizeAndPosition(UDim2.new(0.224, 0, 0.208, 0),UDim2.new(0.376, 0, 1.2, 0),"In", "Quint", 0.8)	
+end)
