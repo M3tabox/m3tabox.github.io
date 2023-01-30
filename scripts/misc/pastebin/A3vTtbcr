@@ -1,0 +1,600 @@
+-- Made By JackMcJagger15
+local FlingKill = Instance.new("ScreenGui")
+local Main = Instance.new("Frame")
+local Label = Instance.new("Frame")
+local Shadow = Instance.new("Frame")
+local StartKill = Instance.new("TextButton")
+local StopKill = Instance.new("TextButton")
+local StartShadow = Instance.new("Frame")
+local StopShadow = Instance.new("Frame")
+local Instructions = Instance.new("TextLabel")
+local CurrentPower = Instance.new("TextLabel")
+local Recomendation = Instance.new("TextLabel")
+local NameOfGui = Instance.new("TextLabel")
+local UPArrow = Instance.new("TextButton")
+local DownArrow = Instance.new("TextButton")
+
+-- Addon By JuniorJacob
+
+local Misc = Instance.new("Frame")
+local MiscLabel = Instance.new("Frame")
+local MiscShadow = Instance.new("Frame")
+local OtherKill = Instance.new("TextButton")
+local OtherStop = Instance.new("TextButton")
+local MiscInstructions = Instance.new("TextLabel")
+local NameOfMisc = Instance.new("TextLabel")
+local CUpArrow = Instance.new("TextButton")
+local CDownArrow = Instance.new("TextButton")
+local MiscCurrentPower = Instance.new("TextLabel")
+local OStopShadow = Instance.new("Frame")
+local OStartShadow = Instance.new("Frame")
+local ToggleButton = Instance.new("TextButton")
+local ToggleInfo = Instance.new("TextLabel")
+local ToggleShadow = Instance.new("Frame")
+local Exit = Instance.new("TextButton")
+
+-- Properties
+
+FlingKill.Name = "Fling/Kill"
+FlingKill.Parent = game.CoreGui
+
+Main.Name = "Main"
+Main.Parent = FlingKill
+Main.BackgroundColor3 = Color3.new(0.92549, 0.941177, 0.945098)
+Main.BorderSizePixel = 0
+Main.Position = UDim2.new(0.702554762, 0, 0.446640313, 0)
+Main.Size = UDim2.new(0, 217, 0, 233)
+Main.Selectable = true
+Main.Active = true
+Main.Draggable = true
+
+Label.Name = "Label"
+Label.Parent = Main
+Label.BackgroundColor3 = Color3.new(0.741176, 0.764706, 0.780392)
+Label.BorderSizePixel = 0
+Label.Size = UDim2.new(0, 217, 0, 27)
+
+Shadow.Name = "Shadow"
+Shadow.Parent = Main
+Shadow.BackgroundColor3 = Color3.new(0.67451, 0.694118, 0.705882)
+Shadow.BorderSizePixel = 0
+Shadow.Position = UDim2.new(0, 0, 0.115879826, 0)
+Shadow.Size = UDim2.new(0, 217, 0, 9)
+
+StartShadow.Name = "StartShadow"
+StartShadow.Parent = Main
+StartShadow.BackgroundColor3 = Color3.new(0.67451, 0.694118, 0.705882)
+StartShadow.BorderSizePixel = 0
+StartShadow.Position = UDim2.new(0.196, 0, 0.326, 0)
+StartShadow.Size = UDim2.new(0, 126, 0, 6)
+
+StopShadow.Name = "StopShadow"
+StopShadow.Parent = Main
+StopShadow.BackgroundColor3 = Color3.new(0.67451, 0.694118, 0.705882)
+StopShadow.BorderSizePixel = 0
+StopShadow.Position = UDim2.new(0.207, 0, 0.481, 0)
+StopShadow.Size = UDim2.new(0, 124, 0, 6)
+
+StartKill.Name = "StartKill"
+StartKill.Parent = Main
+StartKill.BackgroundColor3 = Color3.new(0.741176, 0.764706, 0.780392)
+StartKill.BorderSizePixel = 0
+StartKill.Position = UDim2.new(0.195852548, 0, 0.227467805, 0)
+StartKill.Size = UDim2.new(0, 126, 0, 23)
+StartKill.Font = Enum.Font.Cartoon
+StartKill.Text = "FE Kill/Fling"
+StartKill.TextColor3 = Color3.new(0, 0, 0)
+StartKill.TextSize = 14
+StartKill.AutoButtonColor = false
+
+StopKill.Name = "StopKill"
+StopKill.Parent = Main
+StopKill.BackgroundColor3 = Color3.new(0.741176, 0.764706, 0.780392)
+StopKill.BorderSizePixel = 0
+StopKill.Position = UDim2.new(0.207373276, 0, 0.38197428, 0)
+StopKill.Size = UDim2.new(0, 124, 0, 23)
+StopKill.Font = Enum.Font.Cartoon
+StopKill.Text = "Stop FE Kill/Fling"
+StopKill.TextColor3 = Color3.new(0, 0, 0)
+StopKill.TextSize = 14
+StopKill.AutoButtonColor = false
+
+Instructions.Name = "Instructions"
+Instructions.Parent = Main
+Instructions.BackgroundColor3 = Color3.new(1, 1, 1)
+Instructions.BackgroundTransparency = 1
+Instructions.Position = UDim2.new(0.0391705073, 0, 0.549356222, 0)
+Instructions.Size = UDim2.new(0, 200, 0, 32)
+Instructions.Font = Enum.Font.Cartoon
+Instructions.Text = "Just touch someone to watch the fly to their death!"
+Instructions.TextColor3 = Color3.new(0, 0, 0)
+Instructions.TextSize = 14
+Instructions.TextWrapped = true
+
+CurrentPower.Name = "CurrentPower"
+CurrentPower.Parent = Main
+CurrentPower.BackgroundColor3 = Color3.new(1, 1, 1)
+CurrentPower.BackgroundTransparency = 1
+CurrentPower.Position = UDim2.new(0.276497692, 0, 0.686695278, 0)
+CurrentPower.Size = UDim2.new(0, 98, 0, 36)
+CurrentPower.Font = Enum.Font.Cartoon
+CurrentPower.Text = "Current Power = 5"
+CurrentPower.TextColor3 = Color3.new(0, 0, 0)
+CurrentPower.TextSize = 14
+
+Recomendation.Name = "Recomendation"
+Recomendation.Parent = Main
+Recomendation.BackgroundColor3 = Color3.new(1, 1, 1)
+Recomendation.BackgroundTransparency = 1
+Recomendation.Position = UDim2.new(0.0414746553, 0, 0.884120166, 0)
+Recomendation.Size = UDim2.new(0, 200, 0, 21)
+Recomendation.Font = Enum.Font.Cartoon
+Recomendation.Text = "Recommended Power is 5"
+Recomendation.TextColor3 = Color3.new(0, 0, 0)
+Recomendation.TextSize = 14
+
+NameOfGui.Name = "NameOfGui"
+NameOfGui.Parent = Main
+NameOfGui.BackgroundColor3 = Color3.new(1, 1, 1)
+NameOfGui.BackgroundTransparency = 1
+NameOfGui.Position = UDim2.new(0.118, 0, 0, 0)
+NameOfGui.Size = UDim2.new(0, 154, 0, 27)
+NameOfGui.Font = Enum.Font.Cartoon
+NameOfGui.Text = "FE Kill/Fling By JackMcJagger15"
+NameOfGui.TextColor3 = Color3.new(0, 0, 0)
+NameOfGui.TextSize = 14
+
+UPArrow.Name = "UPArrow"
+UPArrow.Parent = Main
+UPArrow.BackgroundColor3 = Color3.new(1, 1, 1)
+UPArrow.BackgroundTransparency = 1
+UPArrow.Position = UDim2.new(0.0783410147, 0, 0.716738224, 0)
+UPArrow.Size = UDim2.new(0, 26, 0, 23)
+UPArrow.Font = Enum.Font.Cartoon
+UPArrow.Text = "Up"
+UPArrow.TextColor3 = Color3.new(0, 0, 0)
+UPArrow.TextSize = 12
+UPArrow.TextWrapped = true
+
+DownArrow.Name = "DownArrow"
+DownArrow.Parent = Main
+DownArrow.BackgroundColor3 = Color3.new(1, 1, 1)
+DownArrow.BackgroundTransparency = 1
+DownArrow.Position = UDim2.new(0.792626739, 0, 0.714592278, 0)
+DownArrow.Size = UDim2.new(0, 26, 0, 23)
+DownArrow.Font = Enum.Font.Cartoon
+DownArrow.Text = "Down"
+DownArrow.TextColor3 = Color3.new(0, 0, 0)
+DownArrow.TextSize = 12
+DownArrow.TextWrapped = true
+
+-- Misc Properties
+
+--[[
+
+local Misc = Instance.new("Frame")
+local MiscLabel = Instance.new("Frame")
+local MiscShadow = Instance.new("Frame")
+local OtherKill = Instance.new("TextButton")
+local OtherStop = Instance.new("TextButton")
+local MiscInstructions = Instance.new("TextLabel")
+local NameOfMisc = Instance.new("TextLabel")
+local CUpArrow = Instance.new("TextButton")
+local CDownArrow = Instance.new("TextButton")
+local MiscCurrentPower = Instance.new("TextLabel")
+local OStopShadow = Instance.new("Frame")
+local OStartShadow = Instance.new("Frame")
+local ToggleButton = Instance.new("TextButton")
+local ToggleInfo = Instance.new("TextLabel")
+local ToggleShadow = Instance.new("Frame")
+local Exit = Instance.new("TextButton")
+
+--]]
+
+Misc.Name = "Misc"
+Misc.Parent = Main
+Misc.BackgroundColor3 = Color3.new(0.92549, 0.941177, 0.945098)
+Misc.BorderSizePixel = 0
+Misc.Position = UDim2.new(0.998, 0,0.001, 0)
+Misc.Size = UDim2.new(0, 214,0, 233)
+Misc.Selectable = true
+Misc.Active = true
+Misc.Draggable = false
+
+MiscLabel.Name = "MiscLabel"
+MiscLabel.Parent = Misc
+MiscLabel.BackgroundColor3 = Color3.new(0.741176, 0.764706, 0.780392)
+MiscLabel.BorderSizePixel = 0
+MiscLabel.Size = UDim2.new(0, 214,0, 27)
+
+MiscShadow.Name = "MiscShadow"
+MiscShadow.Parent = Misc
+MiscShadow.BackgroundColor3 = Color3.new(0.67451, 0.694118, 0.705882)
+MiscShadow.BorderSizePixel = 0
+MiscShadow.Position = UDim2.new(0, 0, 0.116, 0)
+MiscShadow.Size = UDim2.new(0, 214, 0, 9)
+
+OStartShadow.Name = "OStartShadow"
+OStartShadow.Parent = Misc
+OStartShadow.BackgroundColor3 = Color3.new(0.67451, 0.694118, 0.705882)
+OStartShadow.BorderSizePixel = 0
+OStartShadow.Position = UDim2.new(0.173, 0, 0.326, 0)
+OStartShadow.Size = UDim2.new(0, 139, 0, 6)
+
+OStopShadow.Name = "OStopShadow"
+OStopShadow.Parent = Misc
+OStopShadow.BackgroundColor3 = Color3.new(0.67451, 0.694118, 0.705882)
+OStopShadow.BorderSizePixel = 0
+OStopShadow.Position = UDim2.new(0.173, 0, 0.481, 0)
+OStopShadow.Size = UDim2.new(0, 139, 0, 6)
+
+ToggleShadow.Name = "ToggleShadow"
+ToggleShadow.Parent = Misc
+ToggleShadow.BackgroundColor3 = Color3.new(0.67451, 0.694118, 0.705882)
+ToggleShadow.BorderSizePixel = 0
+ToggleShadow.Position = UDim2.new(0.79, 0, 0.957, 0)
+ToggleShadow.Size = UDim2.new(0, 39, 0, 4)
+
+OtherKill.Name = "StartOthers"
+OtherKill.Parent = Misc
+OtherKill.BackgroundColor3 = Color3.new(0.741176, 0.764706, 0.780392)
+OtherKill.BorderSizePixel = 0
+OtherKill.Position = UDim2.new(0.173, 0, 0.227, 0)
+OtherKill.Size = UDim2.new(0, 139, 0, 23)
+OtherKill.Font = Enum.Font.Cartoon
+OtherKill.Text = "Fling Others"
+OtherKill.TextColor3 = Color3.new(0, 0, 0)
+OtherKill.TextSize = 14
+OtherKill.AutoButtonColor = false
+
+OtherStop.Name = "StopOthers"
+OtherStop.Parent = Misc
+OtherStop.BackgroundColor3 = Color3.new(0.741176, 0.764706, 0.780392)
+OtherStop.BorderSizePixel = 0
+OtherStop.Position = UDim2.new(0.173, 0, 0.382, 0)
+OtherStop.Size = UDim2.new(0, 139, 0, 23)
+OtherStop.Font = Enum.Font.Cartoon
+OtherStop.Text = "Stop Flinging Others"
+OtherStop.TextColor3 = Color3.new(0, 0, 0)
+OtherStop.TextSize = 14
+OtherStop.AutoButtonColor = false
+
+ToggleButton.Name = "ToggleButton"
+ToggleButton.Parent = Misc
+ToggleButton.BackgroundColor3 = Color3.new(0.741176, 0.764706, 0.780392)
+ToggleButton.BorderSizePixel = 0
+ToggleButton.Position = UDim2.new(0.79, 0, 0.884, 0)
+ToggleButton.Size = UDim2.new(0, 39, 0, 17)
+ToggleButton.Font = Enum.Font.Cartoon
+ToggleButton.Text = "Off"
+ToggleButton.TextColor3 = Color3.new(0, 0, 0)
+ToggleButton.TextSize = 14
+ToggleButton.AutoButtonColor = false
+
+MiscInstructions.Name = "MiscInstructions"
+MiscInstructions.Parent = Misc
+MiscInstructions.BackgroundColor3 = Color3.new(1, 1, 1)
+MiscInstructions.BackgroundTransparency = 1
+MiscInstructions.Position = UDim2.new(0.039, 0, 0.549, 0)
+MiscInstructions.Size = UDim2.new(0, 200, 0, 32)
+MiscInstructions.Font = Enum.Font.Cartoon
+MiscInstructions.Text = "Sit back and relax while the script automatically finds players to fling."
+MiscInstructions.TextColor3 = Color3.new(0, 0, 0)
+MiscInstructions.TextSize = 14
+MiscInstructions.TextWrapped = true
+
+MiscCurrentPower.Name = "MiscCurrentPower"
+MiscCurrentPower.Parent = Misc
+MiscCurrentPower.BackgroundColor3 = Color3.new(1, 1, 1)
+MiscCurrentPower.BackgroundTransparency = 1
+MiscCurrentPower.Position = UDim2.new(0.276497692, 0, 0.686695278, 0)
+MiscCurrentPower.Size = UDim2.new(0, 98, 0, 36)
+MiscCurrentPower.Font = Enum.Font.Cartoon
+MiscCurrentPower.Text = "Current Power = 8"
+MiscCurrentPower.TextColor3 = Color3.new(0, 0, 0)
+MiscCurrentPower.TextSize = 14
+
+ToggleInfo.Name = "ToggleInfo"
+ToggleInfo.Parent = Misc
+ToggleInfo.BackgroundColor3 = Color3.new(1, 1, 1)
+ToggleInfo.BackgroundTransparency = 1
+ToggleInfo.Position = UDim2.new(0.037, 0, 0.884, 0)
+ToggleInfo.Size = UDim2.new(0, 155, 0, 21)
+ToggleInfo.Font = Enum.Font.Cartoon
+ToggleInfo.Text = "Use Custom Power Values"
+ToggleInfo.TextColor3 = Color3.new(0, 0, 0)
+ToggleInfo.TextSize = 14
+
+NameOfMisc.Name = "NameOfMisc"
+NameOfMisc.Parent = Misc
+NameOfMisc.BackgroundColor3 = Color3.new(1, 1, 1)
+NameOfMisc.BackgroundTransparency = 1
+NameOfMisc.Position = UDim2.new(0.098, 0, 0, 0)
+NameOfMisc.Size = UDim2.new(0, 154, 0, 27)
+NameOfMisc.Font = Enum.Font.Cartoon
+NameOfMisc.Text = "Addition By JuniorJacob"
+NameOfMisc.TextColor3 = Color3.new(0, 0, 0)
+NameOfMisc.TextSize = 14
+
+Exit.Name = "Exit"
+Exit.Parent = Misc
+Exit.BackgroundColor3 = Color3.new(1, 1, 1)
+Exit.BackgroundTransparency = 1
+Exit.Position = UDim2.new(0.893, 0, 0, 0)
+Exit.Size = UDim2.new(0, 20, 0, 27)
+Exit.Font = Enum.Font.Cartoon
+Exit.Text = "X"
+Exit.TextColor3 = Color3.new(0, 0, 0)
+Exit.TextSize = 14
+
+CUpArrow.Name = "CUpArrow"
+CUpArrow.Parent = Misc
+CUpArrow.BackgroundColor3 = Color3.new(1, 1, 1)
+CUpArrow.BackgroundTransparency = 1
+CUpArrow.Position = UDim2.new(0.078, 0, 0.717, 0)
+CUpArrow.Size = UDim2.new(0, 26, 0, 23)
+CUpArrow.Font = Enum.Font.Cartoon
+CUpArrow.Text = "Up"
+CUpArrow.TextColor3 = Color3.new(0, 0, 0)
+CUpArrow.TextSize = 12
+CUpArrow.TextWrapped = true
+
+CDownArrow.Name = "CDownArrow"
+CDownArrow.Parent = Misc
+CDownArrow.BackgroundColor3 = Color3.new(1, 1, 1)
+CDownArrow.BackgroundTransparency = 1
+CDownArrow.Position = UDim2.new(0.793, 0, 0.715, 0)
+CDownArrow.Size = UDim2.new(0, 26, 0, 23)
+CDownArrow.Font = Enum.Font.Cartoon
+CDownArrow.Text = "Down"
+CDownArrow.TextColor3 = Color3.new(0, 0, 0)
+CDownArrow.TextSize = 12
+CDownArrow.TextWrapped = true
+
+local toggle = false
+
+if game.Players.LocalPlayer:FindFirstChild('Number') then
+for i,v in pairs(game.Players.LocalPlayer:GetChildren()) do
+if v.Name == "Number" then
+v:Destroy()
+end
+end
+elseif game.Players.LocalPlayer:FindFirstChild('CNumber') then
+for i,v in pairs(game.Players.LocalPlayer:GetChildren()) do
+if v.Name == "CNumber" then
+v:Destroy()
+end
+end
+elseif game.Workspace:FindFirstChild("XD") then
+for i,v in pairs(workspace:GetChildren()) do
+if v.Name == "XD" then
+v:Destroy()
+end
+end
+end
+
+power = 500
+active = false
+local val = Instance.new("IntValue")
+val.Name = "Number"
+val.Parent = game.Players.LocalPlayer
+val.Value = 5
+
+cpower = 8000
+cactive = false
+local cval = Instance.new("IntValue")
+cval.Name = "CNumber"
+cval.Parent = game.Players.LocalPlayer
+cval.Value = 8
+
+if game.PlaceId == 414300524 then -- Hilton Hotels
+Recomendation.Text = "Recommended Power is 8"
+elseif game.PlaceId == 323925323 then -- Frappe
+Recomendation.Text = "Recommended Power is 30"
+elseif game.PlaceId == 679498303 then -- Bakiez
+Recomendation.Text = "Recommended Power is 15"
+elseif game.PlaceId == 265360172 then -- Dunkin Donuts
+Recomendation.Text = "Recommended Power is 6"
+elseif game.PlaceId == 610172644 then -- Verde
+Recomendation.Text = "Recommended Power is 23"
+elseif game.PlaceId == 1606798444 then
+Recomendation.Text = "This is where I made the addition."
+end
+
+Exit.MouseButton1Click:connect(function()
+FlingKill:Destroy()
+end)
+
+function startSpin()
+game:GetService('RunService').Stepped:connect(function()
+if game.Players.LocalPlayer.Character.Humanoid.RigType == Enum.HumanoidRigType.R6 then
+game.Players.LocalPlayer.Character:FindFirstChild('Head').CanCollide = false
+game.Players.LocalPlayer.Character:FindFirstChild('Torso').CanCollide = false
+game.Players.LocalPlayer.Character["Left Leg"].CanCollide = false
+game.Players.LocalPlayer.Character["Right Leg"].CanCollide = false
+else
+if game.Players.LocalPlayer.Character.Humanoid.RigType == Enum.HumanoidRigType.R15 then
+game.Players.LocalPlayer.Character:FindFirstChild('Head').CanCollide = false
+game.Players.LocalPlayer.Character:FindFirstChild('UpperTorso').CanCollide = false
+game.Players.LocalPlayer.Character:FindFirstChild('LowerTorso').CanCollide = false
+game.Players.LocalPlayer.Character:FindFirstChild('HumanoidRootPart').CanCollide = false
+end
+end
+end)
+wait(.1)
+local bambam = Instance.new("BodyThrust")
+bambam.Parent = game.Players.LocalPlayer.Character.HumanoidRootPart
+if toggle == false then
+bambam.Force = Vector3.new(power,0,power)
+else
+bambam.Force = Vector3.new(cpower,0,cpower)
+end
+bambam.Location = game.Players.LocalPlayer.Character.HumanoidRootPart.Position
+end
+
+StartKill.MouseButton1Click:connect(function()
+startSpin()
+end)
+
+StopKill.MouseButton1Click:connect(function()
+active = false
+game.Players.LocalPlayer.Character.HumanoidRootPart.BodyThrust:Remove()
+end)
+
+local firsttimesetup = false
+local loopOn = false
+
+function tp(playerObject, objectCframe) -- send local player's player object and a CFrame.new() for the xyz and itll tp properly
+if playerObject.Parent == game.Players then -- usage: tp(game.Players["PLRNAME"], FULLPATHHERE.CFrame)
+playerObject.Character:FindFirstChild("HumanoidRootPart").CFrame = CFrame.new(objectCframe.X, objectCframe.Y, objectCframe.Z)
+end
+end
+
+local warpDone = false
+function warp(sentObj)
+warpDone = false
+local root = game.Players.LocalPlayer.Character.HumanoidRootPart
+
+local function run(givenObj)
+local multi = 1.5
+if givenObj.Position then
+local warpObj = givenObj.Position
+local getMag = warpObj-root.Position
+local magnitude = getMag.magnitude
+magnitude = tostring(math.floor(magnitude + 0.99)) if tonumber(magnitude) > 9 then multi = magnitude:sub(1, -2) * 1.2 else multi = magnitude:sub(1, -1) * 1.2 end magnitude = tonumber(magnitude)
+
+for a=0, magnitude, multi do
+root.Anchored = false
+root.CFrame = root.CFrame + (CFrame.new(root.Position, warpObj).lookVector * multi)
+wait(0.05)
+end
+root.Anchored = true
+end
+end
+run(sentObj)
+root.Anchored = false
+warpDone = true
+end
+
+OtherKill.MouseButton1Click:connect(function()
+startSpin()
+wait(0.1)
+loopOn = true
+while loopOn == true do
+wait(0.1)
+for i,v in pairs(game.Players:GetPlayers()) do
+if v.Name ~= game.Players.LocalPlayer.Name and v.Character.Humanoid.Sit ~= true then
+warp(v.Character.HumanoidRootPart)
+repeat
+wait()
+until warpDone == true
+wait(0.5)
+end
+end
+end
+end)
+
+OtherStop.MouseButton1Click:connect(function()
+wait()
+active = false
+loopOn = false
+warpDone = true
+game.Players.LocalPlayer.Character.HumanoidRootPart.BodyThrust:Remove()
+end)
+
+UPArrow.MouseButton1Click:connect(function()
+power = power + 100
+game.Players.LocalPlayer.Number.Value = game.Players.LocalPlayer.Number.Value + 1
+CurrentPower.Text = "Current Power = " .. game.Players.LocalPlayer.Number.Value
+end)
+
+DownArrow.MouseButton1Click:connect(function()
+power = power - 100
+game.Players.LocalPlayer.Number.Value = game.Players.LocalPlayer.Number.Value - 1
+CurrentPower.Text = "Current Power = " .. game.Players.LocalPlayer.Number.Value
+end)
+
+CUpArrow.MouseButton1Click:connect(function()
+if toggle ~= false then
+cpower = cpower + 100
+game.Players.LocalPlayer.CNumber.Value = game.Players.LocalPlayer.CNumber.Value + 1
+MiscCurrentPower.Text = "Current Power = " .. game.Players.LocalPlayer.CNumber.Value
+end
+end)
+
+CDownArrow.MouseButton1Click:connect(function()
+if toggle ~= false then
+cpower = cpower - 100
+game.Players.LocalPlayer.CNumber.Value = game.Players.LocalPlayer.CNumber.Value - 1
+MiscCurrentPower.Text = "Current Power = " .. game.Players.LocalPlayer.CNumber.Value
+end
+end)
+
+local gui = Main
+local buttonArray = {}
+local defaultcolor3 = Color3.fromRGB(188, 195, 198)
+local shadowcolor3 = Color3.fromRGB(172, 177, 179)
+local downcolor3 = Color3.fromRGB(198, 205, 208)
+local attachedArray = {
+StartOthers = gui.Misc.OStartShadow,
+StopOthers = gui.Misc.OStopShadow,
+ToggleButton = gui.Misc.ToggleShadow,
+StartKill = gui.StartShadow,
+StopKill = gui.StopShadow
+}
+
+for i,v in pairs(gui:GetChildren()) do
+if v.ClassName == "TextButton" then
+buttonArray[v.Name] = v
+end
+	
+for x,c in pairs(gui.Misc:GetChildren()) do
+if c.ClassName == "TextButton" then
+buttonArray[c.Name] = c
+end
+end
+end
+
+for i,v in pairs(buttonArray) do
+v.MouseEnter:connect(function()
+v.BackgroundColor3 = shadowcolor3
+end)
+v.MouseLeave:connect(function()
+v.BackgroundColor3 = defaultcolor3
+end)
+v.MouseButton1Click:connect(function()
+if v.Name ~= "Exit" and v.Name ~= "CUpArrow" and v.Name ~= "CDownArrow" and v.Name ~= "UPArrow" and v.Name ~= "DownArrow" then
+-- usage: attachedArray[v.Name] (that gets the object btw)
+if v.Name == "StopOthers" then
+attachedArray[v.Name].Visible = true
+v.Position = UDim2.new(v.Position.X.Scale, v.Position.X.Offset, v.Position.Y.Scale + 0.026, v.Position.Y.Offset)
+wait(0.05)
+v.Position = UDim2.new(v.Position.X.Scale, v.Position.X.Offset, v.Position.Y.Scale - 0.026, v.Position.Y.Offset)
+elseif v.Name == "ToggleButton" then
+attachedArray[v.Name].Visible = true
+v.Position = UDim2.new(v.Position.X.Scale, v.Position.X.Offset, v.Position.Y.Scale + 0.017, v.Position.Y.Offset)
+if toggle == false then
+v.Text = "On"
+toggle = true
+else
+v.Text = "Off"
+toggle = false
+end
+wait(0.05)
+v.Position = UDim2.new(v.Position.X.Scale, v.Position.X.Offset, v.Position.Y.Scale - 0.017, v.Position.Y.Offset)
+else
+attachedArray[v.Name].Visible = true
+v.Position = UDim2.new(v.Position.X.Scale, v.Position.X.Offset, v.Position.Y.Scale + 0.026, v.Position.Y.Offset)
+wait(0.05)
+v.Position = UDim2.new(v.Position.X.Scale, v.Position.X.Offset, v.Position.Y.Scale - 0.026, v.Position.Y.Offset)
+end
+wait(1)
+end
+end)
+end
+
+while wait(0.15) do
+if game.Players.LocalPlayer.Character.Humanoid.Sit == true then
+game.Players.LocalPlayer.Character.Humanoid.Sit = false
+end
+end
