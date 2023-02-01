@@ -2140,7 +2140,7 @@ do
 					end)	
 				end
 
-				self:updateDropdown(dropdown, updatetitle and value or title.." - "..value, nil, callback)
+				self:updateDropdown(dropdown, (updatetitle and value or (dropdown.Search.TextBox.Text.." - "..value)), nil, callback)
 			end)
 			
 			entries = entries + 1
