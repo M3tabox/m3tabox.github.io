@@ -2090,7 +2090,7 @@ do
 		return value
 	end
 	
-	function section:updateDropdown(dropdown, title, list, callback)
+	function section:updateDropdown(dropdown, title, list, callback, updatetitle)
 		dropdown = self:getModule(dropdown)
 		
 		if title then
@@ -2140,7 +2140,7 @@ do
 					end)	
 				end
 
-				self:updateDropdown(dropdown, value, nil, callback)
+				self:updateDropdown(dropdown, updatetitle and value or title.." - "..value, nil, callback)
 			end)
 			
 			entries = entries + 1
