@@ -145,6 +145,8 @@ section:updateDropdown(dropdown, title, list, callback, updatetitle)
     title <string> -> title of dropdown
     list <table> -> content of dropdown
     updatetitle <boolean> -> update dropdown name with title as prefix (true) or without (false or nil)
+    <NOTE:> Dropdown has been modified to revert to original name on losing focus instead of leaving blank
+    <NOTE:> Dropdown has been modified to update dropdown name with the title as prefix on default
 
 section:Resize(smooth)
     -> resizes section based on contents absolutesize, automatic
