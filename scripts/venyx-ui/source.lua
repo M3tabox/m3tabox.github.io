@@ -1773,7 +1773,7 @@ do
 		
 		search.Button.MouseButton1Click:Connect(function()
 			if search.Button.Rotation == 0 then
-				self:updateDropdown(dropdown, nil, list, callback)
+				self:updateDropdown(dropdown, title, list, callback)
 			else
 				self:updateDropdown(dropdown, title, nil, callback)
 			end
@@ -1788,7 +1788,7 @@ do
 		end)
 		
 		search.TextBox.FocusLost:Connect(function()
-            self:updateDropdown(dropdown, title, list, callback)
+            		self:updateDropdown(dropdown, title, list, callback)
 			focused = false
 		end)
 		
